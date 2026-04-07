@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Gallery - Muniwa Enterprises LTD</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="Gallery - Muniwa Enterprises LTD products" name="description">
+    <link href="https://muniwaenterprisesltd.com/img/fav-logo.png" rel="icon">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        :root { --forest: #1B4332; --forest-mid: #2D6A4F; --forest-light: #52B788; --gold: #D4A017; --gold-light: #F4C842; --cream: #FAF7F0; --warm-white: #FFFEF9; --charcoal: #1A1A18; --mid-gray: #6B7280; --light-gray: #E8E4DA; --radius: 4px; --radius-lg: 12px; --nav-height: 72px; }
+        html { scroll-behavior: smooth; }
+        body { font-family: 'DM Sans', sans-serif; background: var(--warm-white); color: var(--charcoal); font-size: 16px; line-height: 1.7; overflow-x: hidden; }
+        h1, h2, h3, h4 { font-family: 'Playfair Display', serif; line-height: 1.25; }
+        a { text-decoration: none; color: inherit; }
+        img { max-width: 100%; display: block; }
+        ul { list-style: none; }
+        #nav { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; background: var(--forest); box-shadow: 0 2px 30px rgba(0,0,0,0.15); }
+        .nav-inner { max-width: 1200px; margin: 0 auto; padding: 0 2rem; display: flex; align-items: center; justify-content: space-between; height: var(--nav-height); }
+        .nav-brand { display: flex; align-items: center; gap: 12px; }
+        .nav-brand img { width: 44px; height: 44px; object-fit: contain; filter: brightness(0) invert(1); }
+        .nav-brand span { font-family: 'Playfair Display', serif; font-size: 18px; font-weight: 700; color: white; }
+        .nav-links { display: flex; align-items: center; gap: 2rem; }
+        .nav-links a { color: rgba(255,255,255,0.85); font-size: 14px; font-weight: 500; letter-spacing: 0.5px; text-transform: uppercase; transition: color 0.2s; position: relative; padding-bottom: 4px; }
+        .nav-links a::after { content: ''; position: absolute; bottom: 0; left: 0; width: 0; height: 1.5px; background: var(--gold-light); transition: width 0.3s ease; }
+        .nav-links a:hover { color: white; }
+        .nav-links a:hover::after, .nav-links a.active::after { width: 100%; }
+        .nav-links a.active { color: white; }
+        .nav-cta { background: var(--gold) !important; color: var(--charcoal) !important; padding: 8px 20px; border-radius: var(--radius); font-weight: 600 !important; }
+        .nav-cta:hover { background: var(--gold-light) !important; }
+        .nav-cta::after { display: none !important; }
+        .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 8px; background: none; border: none; }
+        .hamburger span { display: block; width: 24px; height: 2px; background: white; border-radius: 2px; }
+        .page-hero { background: var(--forest); padding: calc(var(--nav-height) + 50px) 0 60px; position: relative; overflow: hidden; }
+        .page-hero::before { content: ''; position: absolute; inset: 0; background-image: radial-gradient(circle at 80% 50%, rgba(82,183,136,0.1) 0%, transparent 60%); }
+        .page-hero-inner { max-width: 1200px; margin: 0 auto; padding: 0 2rem; position: relative; z-index: 1; }
+        .page-hero h1 { font-size: clamp(2rem, 4vw, 3rem); color: white; margin-bottom: 0.75rem; }
+        .page-hero h1 em { font-style: italic; color: var(--gold-light); }
+        .page-hero p { color: rgba(255,255,255,0.7); font-size: 17px; max-width: 520px; }
+        .breadcrumb { display: flex; align-items: center; gap: 8px; margin-bottom: 1.5rem; }
+        .breadcrumb a { color: rgba(255,255,255,0.5); font-size: 13px; }
+        .breadcrumb a:hover { color: var(--gold-light); }
+        .breadcrumb span { color: rgba(255,255,255,0.3); font-size: 13px; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 2rem; }
+        .filter-bar { background: white; border-bottom: 1px solid var(--light-gray); position: sticky; top: var(--nav-height); z-index: 100; }
+        .filter-inner { max-width: 1200px; margin: 0 auto; padding: 0 2rem; display: flex; gap: 0.5rem; overflow-x: auto; }
+        .filter-btn { padding: 1rem 1.25rem; font-family: 'DM Sans', sans-serif; font-size: 14px; font-weight: 500; color: var(--mid-gray); background: none; border: none; border-bottom: 2px solid transparent; cursor: pointer; white-space: nowrap; transition: all 0.2s; }
+        .filter-btn:hover { color: var(--forest); }
+        .filter-btn.active { color: var(--forest); border-bottom-color: var(--forest); font-weight: 600; }
+        .gallery-section { padding: 60px 0 100px; background: var(--cream); }
+        .gallery-grid { columns: 4; column-gap: 1rem; margin-top: 2rem; }
+        .gallery-item { break-inside: avoid; margin-bottom: 1rem; border-radius: var(--radius-lg); overflow: hidden; position: relative; cursor: pointer; }
+        .gallery-item img { width: 100%; height: auto; display: block; transition: transform 0.4s ease; }
+        .gallery-item:hover img { transform: scale(1.04); }
+        .gallery-item.hidden { display: none; }
+        .gallery-overlay { position: absolute; inset: 0; background: rgba(27,67,50,0.0); display: flex; align-items: center; justify-content: center; transition: background 0.3s; }
+        .gallery-item:hover .gallery-overlay { background: rgba(27,67,50,0.45); }
+        .gallery-overlay-icon { opacity: 0; transition: opacity 0.3s; color: white; }
+        .gallery-item:hover .gallery-overlay-icon { opacity: 1; }
+        .lightbox { position: fixed; inset: 0; background: rgba(0,0,0,0.92); z-index: 2000; display: none; align-items: center; justify-content: center; padding: 2rem; }
+        .lightbox.open { display: flex; }
+        .lightbox-img { max-width: 90vw; max-height: 85vh; object-fit: contain; border-radius: var(--radius-lg); }
+        .lightbox-close { position: absolute; top: 1.5rem; right: 1.5rem; width: 44px; height: 44px; background: rgba(255,255,255,0.1); border: none; border-radius: 50%; color: white; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 20px; transition: background 0.2s; }
+        .lightbox-close:hover { background: rgba(255,255,255,0.2); }
+        .lightbox-caption { position: absolute; bottom: 1.5rem; left: 50%; transform: translateX(-50%); color: rgba(255,255,255,0.7); font-size: 14px; text-align: center; }
+        .lightbox-nav { position: absolute; top: 50%; transform: translateY(-50%); background: rgba(255,255,255,0.1); border: none; border-radius: 50%; width: 48px; height: 48px; color: white; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 24px; transition: background 0.2s; }
+        .lightbox-nav:hover { background: rgba(255,255,255,0.2); }
+        .lightbox-prev { left: 1.5rem; }
+        .lightbox-next { right: 1.5rem; }
+        .cta-banner { background: var(--forest); padding: 80px 0; text-align: center; }
+        .cta-banner h2 { font-size: clamp(1.75rem, 3vw, 2.5rem); color: white; margin-bottom: 1rem; }
+        .cta-banner p { color: rgba(255,255,255,0.7); font-size: 17px; margin-bottom: 2rem; }
+        .btn-primary { background: var(--gold); color: var(--charcoal); padding: 14px 32px; border-radius: var(--radius); font-weight: 600; font-size: 15px; transition: all 0.25s; display: inline-block; }
+        .btn-primary:hover { background: var(--gold-light); transform: translateY(-2px); }
+        footer { background: var(--charcoal); color: rgba(255,255,255,0.7); padding: 64px 0 0; }
+        .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 2fr; gap: 3rem; padding-bottom: 3rem; }
+        .footer-brand img { width: 48px; height: 48px; object-fit: contain; filter: brightness(0) invert(1); margin-bottom: 1rem; }
+        .footer-brand p { font-size: 14px; line-height: 1.7; max-width: 280px; }
+        .footer-col h5 { font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 600; text-transform: uppercase; letter-spacing: 1.5px; color: white; margin-bottom: 1.25rem; }
+        .footer-col ul li { margin-bottom: 0.6rem; }
+        .footer-col ul li a { font-size: 14px; color: rgba(255,255,255,0.55); transition: color 0.2s; }
+        .footer-col ul li a:hover { color: var(--gold-light); }
+        .footer-bottom { border-top: 1px solid rgba(255,255,255,0.08); padding: 1.5rem 0; display: flex; justify-content: space-between; align-items: center; }
+        .footer-bottom p { font-size: 13px; color: rgba(255,255,255,0.4); }
+        .whatsapp-btn { position: fixed; bottom: 5rem; right: 1.5rem; width: 52px; height: 52px; background: #25D366; border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 20px rgba(37,211,102,0.4); z-index: 900; transition: transform 0.2s; }
+        .whatsapp-btn:hover { transform: scale(1.1); }
+        .back-top { position: fixed; bottom: 1.5rem; right: 1.5rem; width: 44px; height: 44px; background: var(--forest); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; opacity: 0; pointer-events: none; transition: opacity 0.3s; z-index: 900; }
+        .back-top.visible { opacity: 1; pointer-events: auto; }
+        @media (max-width: 1024px) { .gallery-grid { columns: 3; } .footer-grid { grid-template-columns: 1fr 1fr; } }
+        @media (max-width: 768px) {
+            .nav-links { display: none; flex-direction: column; gap: 0; position: absolute; top: var(--nav-height); left: 0; right: 0; background: var(--forest); padding: 1rem 2rem 1.5rem; box-shadow: 0 8px 24px rgba(0,0,0,0.2); }
+            .nav-links.open { display: flex; }
+            .nav-links a { padding: 14px 0; border-bottom: 1px solid rgba(255,255,255,0.08); width: 100%; }
+            .hamburger { display: flex; }
+            .gallery-grid { columns: 2; }
+            .lightbox-nav { display: none; }
+            .footer-grid { grid-template-columns: 1fr; }
+            .footer-bottom { flex-direction: column; gap: 0.5rem; text-align: center; }
+        }
+        @media (max-width: 480px) { .gallery-grid { columns: 1; } }
+    </style>
+</head>
+<body>
+<nav id="nav">
+    <div class="nav-inner">
+        <a href="index.html" class="nav-brand">
+            <img src="https://muniwaenterprisesltd.com/img/fav-logo.png" alt="Muniwa Enterprises LTD">
+            <span>Muniwa Enterprises</span>
+        </a>
+        <div class="nav-links" id="navLinks">
+            <a href="index.html">Home</a>
+            <a href="about.html">About</a>
+            <a href="product.html">Products</a>
+            <a href="gallery.html" class="active">Gallery</a>
+            <a href="contact.html">Contact</a>
+            <a href="requestorder.html" class="nav-cta">Request Order</a>
+        </div>
+        <button class="hamburger" id="hamburger" onclick="toggleNav()"><span></span><span></span><span></span></button>
+    </div>
+</nav>
+
+<div class="page-hero">
+    <div class="page-hero-inner">
+        <div class="breadcrumb"><a href="index.html">Home</a><span>›</span><span style="color:rgba(255,255,255,0.7);">Gallery</span></div>
+        <h1>Our <em>Gallery</em></h1>
+        <p>A look at our products, our workspace, and the quality that goes into everything we make.</p>
+    </div>
+</div>
+
+<div class="filter-bar">
+    <div class="filter-inner">
+        <button class="filter-btn active" onclick="filterGallery('all', this)">All</button>
+        <button class="filter-btn" onclick="filterGallery('mattress', this)">Mattresses</button>
+        <button class="filter-btn" onclick="filterGallery('bags', this)">Bags</button>
+        <button class="filter-btn" onclick="filterGallery('home', this)">Home Products</button>
+        <button class="filter-btn" onclick="filterGallery('chemicals', this)">Chemicals</button>
+    </div>
+</div>
+
+<section class="gallery-section">
+    <div class="container">
+        <div class="gallery-grid" id="galleryGrid">
+            <div class="gallery-item" data-cat="mattress" onclick="openLightbox(this)"><img src="https://muniwaenterprisesltd.com/img/mattress.jpg" alt="Mattress" data-caption="Premium Mattresses"><div class="gallery-overlay"><div class="gallery-overlay-icon"><svg width="32" height="32" fill="none" stroke="white" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg></div></div></div>
+            <div class="gallery-item" data-cat="home" onclick="openLightbox(this)"><img src="https://muniwaenterprisesltd.com/img/slider-1.png" alt="Products" data-caption="Our Products"><div class="gallery-overlay"><div class="gallery-overlay-icon"><svg width="32" height="32" fill="none" stroke="white" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg></div></div></div>
+            <div class="gallery-item" data-cat="bags" onclick="openLightbox(this)"><img src="https://muniwaenterprisesltd.com/img/non-woven-bag.jpg" alt="Non-woven Bags" data-caption="Non-Woven Bags"><div class="gallery-overlay"><div class="gallery-overlay-icon"><svg width="32" height="32" fill="none" stroke="white" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg></div></div></div>
+            <div class="gallery-item" data-cat="home" onclick="openLightbox(this)"><img src="https://muniwaenterprisesltd.com/img/plastic-chair.jpg" alt="Plastic Chairs" data-caption="Plastic Chairs"><div class="gallery-overlay"><div class="gallery-overlay-icon"><svg width="32" height="32" fill="none" stroke="white" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg></div></div></div>
+            <div class="gallery-item" data-cat="chemicals" onclick="openLightbox(this)"><img src="https://muniwaenterprisesltd.com/img/TDI-Chemicals.jpg" alt="Chemicals" data-caption="Raw Material Chemicals"><div class="gallery-overlay"><div class="gallery-overlay-icon"><svg width="32" height="32" fill="none" stroke="white" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg></div></div></div>
+            <div class="gallery-item" data-cat="home" onclick="openLightbox(this)"><img src="https://muniwaenterprisesltd.com/img/pillow.jpg" alt="Pillows" data-caption="Pillows & Covers"><div class="gallery-overlay"><div class="gallery-overlay-icon"><svg width="32" height="32" fill="none" stroke="white" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg></div></div></div>
+            <div class="gallery-item" data-cat="home" onclick="openLightbox(this)"><img src="https://muniwaenterprisesltd.com/img/bedsheet.jpg" alt="Bedsheets" data-caption="Bedsheets"><div class="gallery-overlay"><div class="gallery-overlay-icon"><svg width="32" height="32" fill="none" stroke="white" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg></div></div></div>
+            <div class="gallery-item" data-cat="home" onclick="openLightbox(this)"><img src="https://muniwaenterprisesltd.com/img/cushion.jpg" alt="Cushions" data-caption="Cushions & Covers"><div class="gallery-overlay"><div class="gallery-overlay-icon"><svg width="32" height="32" fill="none" stroke="white" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg></div></div></div>
+            <div class="gallery-item" data-cat="home" onclick="openLightbox(this)"><img src="https://muniwaenterprisesltd.com/img/blankets.jpg" alt="Blankets" data-caption="Blankets"><div class="gallery-overlay"><div class="gallery-overlay-icon"><svg width="32" height="32" fill="none" stroke="white" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg></div></div></div>
+            <div class="gallery-item" data-cat="mattress" onclick="openLightbox(this)"><img src="https://muniwaenterprisesltd.com/img/slider-2.jpg" alt="Muniwa" data-caption="Muniwa Enterprises"><div class="gallery-overlay"><div class="gallery-overlay-icon"><svg width="32" height="32" fill="none" stroke="white" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg></div></div></div>
+            <div class="gallery-item" data-cat="mattress" onclick="openLightbox(this)"><img src="https://muniwaenterprisesltd.com/img/slider-3.png" alt="Muniwa Products" data-caption="Our Range"><div class="gallery-overlay"><div class="gallery-overlay-icon"><svg width="32" height="32" fill="none" stroke="white" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg></div></div></div>
+        </div>
+    </div>
+</section>
+
+<div class="lightbox" id="lightbox" onclick="closeLightboxOnBg(event)">
+    <button class="lightbox-close" onclick="closeLightbox()">✕</button>
+    <button class="lightbox-nav lightbox-prev" onclick="navigateLightbox(-1)">‹</button>
+    <img class="lightbox-img" id="lightboxImg" src="" alt="">
+    <button class="lightbox-nav lightbox-next" onclick="navigateLightbox(1)">›</button>
+    <div class="lightbox-caption" id="lightboxCaption"></div>
+</div>
+
+<section class="cta-banner">
+    <div class="container">
+        <h2>Like What You See?</h2>
+        <p>Place an order or get in touch to discuss your requirements.</p>
+        <a href="requestorder.html" class="btn-primary">Request an Order</a>
+    </div>
+</section>
+
+<footer>
+    <div class="container">
+        <div class="footer-grid">
+            <div class="footer-brand"><img src="https://muniwaenterprisesltd.com/img/fav-logo.png" alt="Muniwa Enterprises"><h4 style="font-family:'Playfair Display',serif;color:white;font-size:18px;margin-bottom:0.75rem;">Muniwa Enterprises</h4><p>Premium mattresses and home products, proudly manufactured in Ruai, Nairobi since 2021.</p></div>
+            <div class="footer-col"><h5>Company</h5><ul><li><a href="index.html">Home</a></li><li><a href="about.html">About Us</a></li><li><a href="product.html">Products</a></li><li><a href="gallery.html">Gallery</a></li><li><a href="contact.html">Contact</a></li></ul></div>
+            <div class="footer-col"><h5>Legal</h5><ul><li><a href="#">Privacy Policy</a></li><li><a href="#">Terms & Conditions</a></li><li><a href="requestorder.html">Request Order</a></li></ul></div>
+            <div class="footer-col"><h5>Contact</h5><ul><li><a href="tel:+254104944012">+254 104 944 012</a></li><li><a href="mailto:info@muniwaenterprisesltd.com">info@muniwaenterprisesltd.com</a></li><li><a href="https://wa.me/254104944012" target="_blank">WhatsApp Us</a></li></ul></div>
+        </div>
+        <div class="footer-bottom"><p>&copy; 2025 Muniwa Enterprises Limited. All rights reserved.</p><p>Ruai, Nairobi, Kenya</p></div>
+    </div>
+</footer>
+
+<a href="https://wa.me/254104944012?text=Hello%20Muniwa%20Enterprises!" class="whatsapp-btn" target="_blank" rel="noopener" aria-label="WhatsApp"><svg width="28" height="28" fill="white" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z"/></svg></a>
+<a href="#" class="back-top" id="backTop"><svg width="18" height="18" fill="none" stroke="white" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="18 15 12 9 6 15"/></svg></a>
+
+<script>
+    function toggleNav() { document.getElementById('navLinks').classList.toggle('open'); }
+    document.querySelectorAll('#navLinks a').forEach(l => l.addEventListener('click', () => document.getElementById('navLinks').classList.remove('open')));
+    document.addEventListener('click', e => { const n = document.getElementById('navLinks'), b = document.getElementById('hamburger'); if (n.classList.contains('open') && !n.contains(e.target) && !b.contains(e.target)) n.classList.remove('open'); });
+    window.addEventListener('scroll', () => document.getElementById('backTop').classList.toggle('visible', window.scrollY > 300));
+    function filterGallery(cat, btn) {
+        document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        document.querySelectorAll('.gallery-item').forEach(item => { item.classList.toggle('hidden', cat !== 'all' && item.dataset.cat !== cat); });
+    }
+    let currentIndex = 0, visibleItems = [];
+    function openLightbox(el) {
+        visibleItems = [...document.querySelectorAll('.gallery-item:not(.hidden)')];
+        currentIndex = visibleItems.indexOf(el);
+        showLightboxItem(currentIndex);
+        document.getElementById('lightbox').classList.add('open');
+        document.body.style.overflow = 'hidden';
+    }
+    function showLightboxItem(idx) {
+        const img = visibleItems[idx].querySelector('img');
+        document.getElementById('lightboxImg').src = img.src;
+        document.getElementById('lightboxImg').alt = img.alt;
+        document.getElementById('lightboxCaption').textContent = img.dataset.caption || img.alt;
+    }
+    function navigateLightbox(dir) { currentIndex = (currentIndex + dir + visibleItems.length) % visibleItems.length; showLightboxItem(currentIndex); }
+    function closeLightbox() { document.getElementById('lightbox').classList.remove('open'); document.body.style.overflow = ''; }
+    function closeLightboxOnBg(e) { if (e.target === document.getElementById('lightbox')) closeLightbox(); }
+    document.addEventListener('keydown', e => {
+        if (!document.getElementById('lightbox').classList.contains('open')) return;
+        if (e.key === 'Escape') closeLightbox();
+        if (e.key === 'ArrowRight') navigateLightbox(1);
+        if (e.key === 'ArrowLeft') navigateLightbox(-1);
+    });
+</script>
+</body>
+</html>
