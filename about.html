@@ -1,270 +1,38 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="utf-8">
-    <title>About Us - Muniwa Enterprises LTD</title>
-    <meta content="width=device-width, initial-scale=1.0" name="viewport">
-    <meta content="Learn about Muniwa Enterprises LTD - our story, mission and vision." name="description">
-    <link href="https://muniwaenterprisesltd.com/img/fav-logo.png" rel="icon">
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
-    <style>
-        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-        :root {
-            --forest: #1B4332; --forest-mid: #2D6A4F; --forest-light: #52B788;
-            --gold: #D4A017; --gold-light: #F4C842; --cream: #FAF7F0;
-            --warm-white: #FFFEF9; --charcoal: #1A1A18; --mid-gray: #6B7280;
-            --light-gray: #E8E4DA; --radius: 4px; --radius-lg: 12px; --nav-height: 72px;
-        }
-        html { scroll-behavior: smooth; }
-        body { font-family: 'DM Sans', sans-serif; background: var(--warm-white); color: var(--charcoal); font-size: 16px; line-height: 1.7; overflow-x: hidden; }
-        h1, h2, h3, h4 { font-family: 'Playfair Display', serif; line-height: 1.25; }
-        a { text-decoration: none; color: inherit; }
-        img { max-width: 100%; display: block; }
-        ul { list-style: none; }
-        #nav { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; background: var(--forest); box-shadow: 0 2px 30px rgba(0,0,0,0.15); }
-        .nav-inner { max-width: 1200px; margin: 0 auto; padding: 0 2rem; display: flex; align-items: center; justify-content: space-between; height: var(--nav-height); }
-        .nav-brand { display: flex; align-items: center; gap: 12px; }
-        .nav-brand img { width: 44px; height: 44px; object-fit: contain; filter: brightness(0) invert(1); }
-        .nav-brand span { font-family: 'Playfair Display', serif; font-size: 18px; font-weight: 700; color: white; }
-        .nav-links { display: flex; align-items: center; gap: 2rem; }
-        .nav-links a { color: rgba(255,255,255,0.85); font-size: 14px; font-weight: 500; letter-spacing: 0.5px; text-transform: uppercase; transition: color 0.2s; position: relative; padding-bottom: 4px; }
-        .nav-links a::after { content: ''; position: absolute; bottom: 0; left: 0; width: 0; height: 1.5px; background: var(--gold-light); transition: width 0.3s ease; }
-        .nav-links a:hover { color: white; }
-        .nav-links a:hover::after, .nav-links a.active::after { width: 100%; }
-        .nav-links a.active { color: white; }
-        .nav-cta { background: var(--gold) !important; color: var(--charcoal) !important; padding: 8px 20px; border-radius: var(--radius); font-weight: 600 !important; }
-        .nav-cta:hover { background: var(--gold-light) !important; }
-        .nav-cta::after { display: none !important; }
-        .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 8px; background: none; border: none; }
-        .hamburger span { display: block; width: 24px; height: 2px; background: white; border-radius: 2px; }
-        .page-hero { background: var(--forest); padding: calc(var(--nav-height) + 50px) 0 60px; position: relative; overflow: hidden; }
-        .page-hero::before { content: ''; position: absolute; inset: 0; background-image: radial-gradient(circle at 80% 50%, rgba(82,183,136,0.1) 0%, transparent 60%), radial-gradient(circle at 20% 50%, rgba(212,160,23,0.06) 0%, transparent 60%); }
-        .page-hero-inner { max-width: 1200px; margin: 0 auto; padding: 0 2rem; position: relative; z-index: 1; }
-        .page-hero h1 { font-size: clamp(2rem, 4vw, 3rem); color: white; margin-bottom: 0.75rem; }
-        .page-hero h1 em { font-style: italic; color: var(--gold-light); }
-        .page-hero p { color: rgba(255,255,255,0.7); font-size: 17px; max-width: 520px; }
-        .breadcrumb { display: flex; align-items: center; gap: 8px; margin-bottom: 1.5rem; }
-        .breadcrumb a { color: rgba(255,255,255,0.5); font-size: 13px; transition: color 0.2s; }
-        .breadcrumb a:hover { color: var(--gold-light); }
-        .breadcrumb span { color: rgba(255,255,255,0.3); font-size: 13px; }
-        .container { max-width: 1200px; margin: 0 auto; padding: 0 2rem; }
-        .section-pad { padding: 100px 0; }
-        .section-label { font-size: 12px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; color: var(--forest-light); margin-bottom: 0.75rem; }
-        .section-title { font-size: clamp(2rem, 3.5vw, 2.75rem); font-weight: 700; color: var(--charcoal); margin-bottom: 1rem; }
-        .section-sub { font-size: 17px; color: var(--mid-gray); max-width: 560px; line-height: 1.7; }
-        .text-center { text-align: center; }
-        .text-center .section-sub { margin: 0 auto; }
-        .story { background: var(--cream); }
-        .story-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: center; margin-top: 4rem; }
-        .story-img { position: relative; padding-bottom: 20px; }
-        .story-img img { width: 100%; height: 460px; object-fit: cover; border-radius: var(--radius-lg); }
-        .story-badge { position: absolute; bottom: 0; right: -20px; background: var(--forest); color: white; padding: 24px 28px; border-radius: var(--radius-lg); text-align: center; }
-        .story-badge h3 { font-family: 'DM Sans', sans-serif; font-size: 36px; font-weight: 700; color: var(--gold-light); }
-        .story-badge p { font-size: 13px; color: rgba(255,255,255,0.7); margin-top: 4px; }
-        .story-content h2 { font-size: clamp(2rem, 3vw, 2.5rem); color: var(--charcoal); margin-bottom: 1.25rem; }
-        .story-content p { color: var(--mid-gray); font-size: 16px; margin-bottom: 1.25rem; }
-        .mv-section { background: white; }
-        .mv-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; margin-top: 3.5rem; }
-        .mv-card { padding: 2.5rem; border-radius: var(--radius-lg); border: 1px solid var(--light-gray); position: relative; overflow: hidden; }
-        .mv-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px; background: var(--forest); }
-        .mv-card.gold::before { background: var(--gold); }
-        .mv-card.green::before { background: var(--forest-light); }
-        .mv-icon { width: 52px; height: 52px; background: rgba(27,67,50,0.08); border-radius: 12px; display: flex; align-items: center; justify-content: center; margin-bottom: 1.25rem; }
-        .mv-card h3 { font-size: 22px; margin-bottom: 0.75rem; color: var(--charcoal); }
-        .mv-card p { font-size: 15px; color: var(--mid-gray); line-height: 1.7; }
-        .values { background: var(--forest); padding: 100px 0; position: relative; overflow: hidden; }
-        .values::before { content: ''; position: absolute; inset: 0; background-image: radial-gradient(circle at 20% 50%, rgba(82,183,136,0.08) 0%, transparent 60%), radial-gradient(circle at 80% 50%, rgba(212,160,23,0.05) 0%, transparent 60%); }
-        .values-inner { position: relative; z-index: 1; }
-        .values .section-title { color: white; }
-        .values .section-sub { color: rgba(255,255,255,0.65); }
-        .values-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.5rem; margin-top: 3.5rem; }
-        .value-item { background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1); border-radius: var(--radius-lg); padding: 2rem 1.5rem; text-align: center; }
-        .value-icon { width: 56px; height: 56px; background: rgba(212,160,23,0.15); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem; }
-        .value-item h4 { font-size: 18px; color: white; margin-bottom: 0.5rem; }
-        .value-item p { font-size: 14px; color: rgba(255,255,255,0.6); }
-        .cta-banner { background: var(--charcoal); padding: 80px 0; text-align: center; }
-        .cta-banner h2 { font-size: clamp(1.75rem, 3vw, 2.5rem); color: white; margin-bottom: 1rem; }
-        .cta-banner p { color: rgba(255,255,255,0.65); font-size: 17px; margin-bottom: 2rem; }
-        .btn-primary { background: var(--gold); color: var(--charcoal); padding: 14px 32px; border-radius: var(--radius); font-weight: 600; font-size: 15px; transition: all 0.25s; display: inline-block; }
-        .btn-primary:hover { background: var(--gold-light); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(212,160,23,0.35); }
-        .btn-outline-white { background: transparent; color: white; padding: 14px 32px; border-radius: var(--radius); font-weight: 500; font-size: 15px; border: 1.5px solid rgba(255,255,255,0.3); transition: all 0.25s; display: inline-block; margin-left: 1rem; }
-        .btn-outline-white:hover { border-color: white; background: rgba(255,255,255,0.08); }
-        footer { background: var(--charcoal); color: rgba(255,255,255,0.7); padding: 64px 0 0; }
-        .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 2fr; gap: 3rem; padding-bottom: 3rem; }
-        .footer-brand img { width: 48px; height: 48px; object-fit: contain; filter: brightness(0) invert(1); margin-bottom: 1rem; }
-        .footer-brand p { font-size: 14px; line-height: 1.7; max-width: 280px; }
-        .footer-col h5 { font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 600; text-transform: uppercase; letter-spacing: 1.5px; color: white; margin-bottom: 1.25rem; }
-        .footer-col ul li { margin-bottom: 0.6rem; }
-        .footer-col ul li a { font-size: 14px; color: rgba(255,255,255,0.55); transition: color 0.2s; }
-        .footer-col ul li a:hover { color: var(--gold-light); }
-        .footer-bottom { border-top: 1px solid rgba(255,255,255,0.08); padding: 1.5rem 0; display: flex; justify-content: space-between; align-items: center; }
-        .footer-bottom p { font-size: 13px; color: rgba(255,255,255,0.4); }
-        .whatsapp-btn { position: fixed; bottom: 5rem; right: 1.5rem; width: 52px; height: 52px; background: #25D366; border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 20px rgba(37,211,102,0.4); z-index: 900; transition: transform 0.2s; }
-        .whatsapp-btn:hover { transform: scale(1.1); }
-        .back-top { position: fixed; bottom: 1.5rem; right: 1.5rem; width: 44px; height: 44px; background: var(--forest); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; opacity: 0; pointer-events: none; transition: opacity 0.3s; z-index: 900; }
-        .back-top.visible { opacity: 1; pointer-events: auto; }
-        .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.6s ease, transform 0.6s ease; }
-        .reveal.visible { opacity: 1; transform: translateY(0); }
-        .reveal-delay-1 { transition-delay: 0.1s; } .reveal-delay-2 { transition-delay: 0.2s; } .reveal-delay-3 { transition-delay: 0.3s; }
-        @media (max-width: 1024px) { .mv-grid { grid-template-columns: 1fr 1fr; } .values-grid { grid-template-columns: repeat(2, 1fr); } .footer-grid { grid-template-columns: 1fr 1fr; } }
-        @media (max-width: 768px) {
-            .nav-links { display: none; flex-direction: column; gap: 0; position: absolute; top: var(--nav-height); left: 0; right: 0; background: var(--forest); padding: 1rem 2rem 1.5rem; box-shadow: 0 8px 24px rgba(0,0,0,0.2); }
-            .nav-links.open { display: flex; }
-            .nav-links a { padding: 14px 0; border-bottom: 1px solid rgba(255,255,255,0.08); width: 100%; }
-            .hamburger { display: flex; }
-            .story-grid { grid-template-columns: 1fr; gap: 3rem; }
-            .story-img { padding-bottom: 0; }
-            .story-badge { position: static; margin-top: 1rem; right: auto; }
-            .mv-grid { grid-template-columns: 1fr; }
-            .values-grid { grid-template-columns: 1fr 1fr; }
-            .footer-grid { grid-template-columns: 1fr; }
-            .footer-bottom { flex-direction: column; gap: 0.5rem; text-align: center; }
-            .btn-outline-white { margin-left: 0; margin-top: 1rem; display: block; text-align: center; }
-        }
-    </style>
-</head>
-<body>
-<nav id="nav">
-    <div class="nav-inner">
-        <a href="index.html" class="nav-brand">
-            <img src="https://muniwaenterprisesltd.com/img/fav-logo.png" alt="Muniwa Enterprises LTD">
-            <span>Muniwa Enterprises</span>
-        </a>
-        <div class="nav-links" id="navLinks">
-            <a href="index.html">Home</a>
-            <a href="about.html" class="active">About</a>
-            <a href="product.html">Products</a>
-            <a href="gallery.html">Gallery</a>
-            <a href="contact.html">Contact</a>
-            <a href="requestorder.html" class="nav-cta">Request Order</a>
-        </div>
-        <button class="hamburger" id="hamburger" onclick="toggleNav()"><span></span><span></span><span></span></button>
-    </div>
-</nav>
 
-<div class="page-hero">
-    <div class="page-hero-inner">
-        <div class="breadcrumb"><a href="index.html">Home</a><span>›</span><span style="color:rgba(255,255,255,0.7);">About Us</span></div>
-        <h1>Our <em>Story</em></h1>
-        <p>From humble beginnings in Ruai to becoming a trusted name in comfort and manufacturing across East Africa.</p>
-    </div>
-</div>
-
-<section class="story section-pad">
-    <div class="container">
-        <div class="story-grid">
-            <div class="story-img reveal">
-                <img src="https://muniwaenterprisesltd.com/img/slider-2.jpg" alt="Muniwa Enterprises">
-                <div class="story-badge"><h3>3+</h3><p>Years of Excellence</p></div>
-            </div>
-            <div class="reveal reveal-delay-2">
-                <div class="section-label">Who We Are</div>
-                <h2 class="section-title">Built on Quality, Driven by Comfort</h2>
-                <p style="color:var(--mid-gray);font-size:16px;margin-bottom:1.25rem;">Founded in 2021 and proudly based in Ruai, Nairobi, <strong>Muniwa Enterprises Limited</strong> specializes in manufacturing and supplying high-quality mattresses designed to elevate your sleep experience.</p>
-                <p style="color:var(--mid-gray);font-size:16px;margin-bottom:1.25rem;">In addition to mattresses, we offer a wide range of products including chemicals, plastic buckets, mugs and plates, chairs, pillows and covers, cushions and covers, bedsheets, blankets, and non-woven bags.</p>
-                <p style="color:var(--mid-gray);font-size:16px;margin-bottom:1.25rem;">As innovators, partners, and leaders, we are dedicated to delivering products that blend comfort, durability, and superior craftsmanship with a strong focus on quality and customer satisfaction.</p>
-                <a href="requestorder.html" class="btn-primary" style="margin-top:1rem;">Request an Order</a>
-            </div>
-        </div>
-    </div>
-</section>
-
-<section class="mv-section section-pad">
-    <div class="container">
-        <div class="text-center reveal">
-            <div class="section-label">What Drives Us</div>
-            <h2 class="section-title">Our Purpose</h2>
-            <p class="section-sub">Everything we do is guided by a clear mission, an ambitious vision, and values we live by every day.</p>
-        </div>
-        <div class="mv-grid">
-            <div class="mv-card reveal reveal-delay-1">
-                <div class="mv-icon"><svg width="24" height="24" fill="none" stroke="var(--forest)" stroke-width="2" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 21 12 17.77 5.82 21 7 14.14 2 9.27l6.91-1.01L12 2z"/></svg></div>
-                <h3>Our Mission</h3>
-                <p>To support customers and manufacturers by providing premium, sustainable products that foster innovation, elevate comfort, and ensure exceptional craftsmanship in every creation.</p>
-            </div>
-            <div class="mv-card gold reveal reveal-delay-2">
-                <div class="mv-icon"><svg width="24" height="24" fill="none" stroke="var(--gold)" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg></div>
-                <h3>Our Vision</h3>
-                <p>To be East Africa's most trusted name in home comfort and manufacturing solutions — a company that customers return to for quality, reliability, and value.</p>
-            </div>
-            <div class="mv-card green reveal reveal-delay-3">
-                <div class="mv-icon"><svg width="24" height="24" fill="none" stroke="var(--forest-light)" stroke-width="2" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
-                <h3>Our Promise</h3>
-                <p>Every product we deliver meets the highest standards of quality. We stand behind our craftsmanship and are committed to customer satisfaction from first contact to final delivery.</p>
-            </div>
-        </div>
-    </div>
-</section>
-
-<section class="values">
-    <div class="container values-inner">
-        <div class="text-center reveal">
-            <div class="section-label" style="color:var(--gold-light);">What We Stand For</div>
-            <h2 class="section-title">Our Core Values</h2>
-            <p class="section-sub">These principles shape every decision we make and every product we deliver.</p>
-        </div>
-        <div class="values-grid">
-            <div class="value-item reveal reveal-delay-1">
-                <div class="value-icon"><svg width="24" height="24" fill="none" stroke="var(--gold-light)" stroke-width="2" viewBox="0 0 24 24"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></div>
-                <h4>Quality First</h4>
-                <p>We never compromise on the quality of our materials or craftsmanship.</p>
-            </div>
-            <div class="value-item reveal reveal-delay-2">
-                <div class="value-icon"><svg width="24" height="24" fill="none" stroke="var(--gold-light)" stroke-width="2" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
-                <h4>Customer Focus</h4>
-                <p>Our customers are at the heart of everything we do. Their satisfaction is our success.</p>
-            </div>
-            <div class="value-item reveal reveal-delay-3">
-                <div class="value-icon"><svg width="24" height="24" fill="none" stroke="var(--gold-light)" stroke-width="2" viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg></div>
-                <h4>Innovation</h4>
-                <p>We continuously seek better materials, processes, and solutions for our clients.</p>
-            </div>
-            <div class="value-item reveal reveal-delay-1">
-                <div class="value-icon"><svg width="24" height="24" fill="none" stroke="var(--gold-light)" stroke-width="2" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></div>
-                <h4>Community</h4>
-                <p>Proudly Kenyan, we invest in our local community and support the growth of Ruai.</p>
-            </div>
-        </div>
-    </div>
-</section>
-
-<section class="cta-banner">
-    <div class="container">
-        <h2>Ready to Work With Us?</h2>
-        <p>Whether you need bulk orders, custom products, or just have a question — we're here to help.</p>
-        <a href="contact.html" class="btn-primary">Contact Us Today</a>
-        <a href="product.html" class="btn-outline-white">View Our Products</a>
-    </div>
-</section>
-
-<footer>
-    <div class="container">
-        <div class="footer-grid">
-            <div class="footer-brand">
-                <img src="https://muniwaenterprisesltd.com/img/fav-logo.png" alt="Muniwa Enterprises">
-                <h4 style="font-family:'Playfair Display',serif;color:white;font-size:18px;margin-bottom:0.75rem;">Muniwa Enterprises</h4>
-                <p>Premium mattresses and home products, proudly manufactured in Ruai, Nairobi since 2021.</p>
-            </div>
-            <div class="footer-col"><h5>Company</h5><ul><li><a href="index.html">Home</a></li><li><a href="about.html">About Us</a></li><li><a href="product.html">Products</a></li><li><a href="gallery.html">Gallery</a></li><li><a href="contact.html">Contact</a></li></ul></div>
-            <div class="footer-col"><h5>Legal</h5><ul><li><a href="#">Privacy Policy</a></li><li><a href="#">Terms & Conditions</a></li><li><a href="requestorder.html">Request Order</a></li></ul></div>
-            <div class="footer-col"><h5>Contact</h5><ul><li><a href="tel:+254104944012">+254 104 944 012</a></li><li><a href="mailto:info@muniwaenterprisesltd.com">info@muniwaenterprisesltd.com</a></li><li><a href="https://wa.me/254104944012" target="_blank">WhatsApp Us</a></li></ul></div>
-        </div>
-        <div class="footer-bottom"><p>&copy; 2025 Muniwa Enterprises Limited. All rights reserved.</p><p>Ruai, Nairobi, Kenya</p></div>
-    </div>
-</footer>
-
-<a href="https://wa.me/254104944012?text=Hello%20Muniwa%20Enterprises!" class="whatsapp-btn" target="_blank" rel="noopener" aria-label="WhatsApp">
-    <svg width="28" height="28" fill="white" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z"/></svg>
-</a>
-<a href="#" class="back-top" id="backTop"><svg width="18" height="18" fill="none" stroke="white" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="18 15 12 9 6 15"/></svg></a>
-
-<script>
-    function toggleNav() { document.getElementById('navLinks').classList.toggle('open'); }
-    document.querySelectorAll('#navLinks a').forEach(l => l.addEventListener('click', () => document.getElementById('navLinks').classList.remove('open')));
-    document.addEventListener('click', e => { const n = document.getElementById('navLinks'), b = document.getElementById('hamburger'); if (n.classList.contains('open') && !n.contains(e.target) && !b.contains(e.target)) n.classList.remove('open'); });
-    window.addEventListener('scroll', () => document.getElementById('backTop').classList.toggle('visible', window.scrollY > 300));
-    const obs = new IntersectionObserver(entries => entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); }), { threshold: 0.12 });
-    document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
-</script>
-</body>
-</html>
+<html lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><meta content="web_standard" name="shell-type"/><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&amp;family=Playfair+Display:ital,wght@0,400..900;1,400..900&amp;display=swap" rel="stylesheet"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config={darkMode:"class",theme:{extend:{"colors":{"primary-fixed-dim":"#a5d0b9","on-tertiary-container":"#72a9f0","surface-container-high":"#ebe8e1","surface":"#fcf9f2","outline":"#717973","primary-fixed":"#c1ecd4","on-primary":"#ffffff","text-charcoal-secondary":"#22252A","error":"#ba1a1a","on-primary-fixed":"#002114","border-earth":"#E2DACB","tertiary-fixed-dim":"#a3c9ff","on-surface-variant":"#414844","delivery-amber":"#C67D0A","on-secondary-fixed-variant":"#5c4300","tertiary-container":"#003d70","surface-bright":"#fcf9f2","on-tertiary-fixed":"#001c39","error-container":"#ffdad6","surface-tint":"#3f6653","inverse-primary":"#a5d0b9","on-secondary-fixed":"#261a00","on-secondary-container":"#715300","secondary-fixed":"#ffdfa0","text-charcoal-primary":"#1F2421","on-primary-fixed-variant":"#274e3d","secondary":"#795900","surface-container-lowest":"#ffffff","surface-variant":"#e5e2db","on-tertiary":"#ffffff","on-error-container":"#93000a","inverse-surface":"#31312c","on-background":"#1c1c18","surface-container-highest":"#e5e2db","surface-cream-subtle":"#F3EFE6","surface-dim":"#dcdad3","on-error":"#ffffff","surface-container":"#f0eee7","primary-container":"#1b4332","secondary-container":"#ffc641","on-surface":"#1c1c18","tertiary-fixed":"#d3e3ff","tertiary":"#00274b","industrial-danger-sds":"#B9382B","on-secondary":"#ffffff","on-tertiary-fixed-variant":"#004882","surface-container-low":"#f6f3ec","secondary-fixed-dim":"#f6be39","outline-variant":"#c1c8c2","on-primary-container":"#86af99","background":"#fcf9f2","primary":"#012d1d","inverse-on-surface":"#f3f0ea"},"borderRadius":{"DEFAULT":"0.25rem","lg":"0.5rem","xl":"0.75rem","full":"9999px"},"spacing":{"gutter-mobile":"1rem","space-md":"1rem","gutter":"1.5rem","margin-mobile":"1.25rem","space-lg":"1.5rem","space-sm":"0.5rem","space-xl":"2.5rem","margin":"3rem","space-xs":"0.25rem"},"fontFamily":{"headline-sm":["Playfair Display"],"body-md":["DM Sans"],"headline-md":["Playfair Display"],"label-lg":["DM Sans"],"body-lg":["DM Sans"],"headline-xl":["Playfair Display"],"headline-xl-mobile":["Playfair Display"],"label-spec":["DM Sans"],"headline-lg-mobile":["Playfair Display"],"body-sm":["DM Sans"],"headline-lg":["Playfair Display"],"label-md":["DM Sans"]},"fontSize":{"headline-sm":["20px",{"lineHeight":"28px","fontWeight":"600"}],"body-md":["16px",{"lineHeight":"24px","fontWeight":"400"}],"headline-md":["26px",{"lineHeight":"34px","fontWeight":"600"}],"label-lg":["14px",{"lineHeight":"20px","fontWeight":"700"}],"body-lg":["18px",{"lineHeight":"28px","fontWeight":"400"}],"headline-xl":["48px",{"lineHeight":"56px","fontWeight":"700"}],"headline-xl-mobile":["34px",{"lineHeight":"42px","fontWeight":"700"}],"label-spec":["11px",{"lineHeight":"14px","fontWeight":"700"}],"headline-lg-mobile":["28px",{"lineHeight":"36px","fontWeight":"600"}],"body-sm":["14px",{"lineHeight":"20px","fontWeight":"400"}],"headline-lg":["36px",{"lineHeight":"44px","fontWeight":"600"}],"label-md":["12px",{"lineHeight":"16px","fontWeight":"600"}]}}}};</script><title>About Us | Muniwa Enterprises LTD</title><meta name="description" content="Learn about Muniwa Enterprises LTD: our story, mission and vision. Mattress manufacturer in Ruai, Nairobi since 2021."/><link href="img/fav-logo.png" rel="icon"/><link rel="canonical" href="https://muniwaenterprisesltd.com/about.html"/><meta property="og:type" content="website"/><meta property="og:site_name" content="Muniwa Enterprises LTD"/><meta property="og:title" content="About Us | Muniwa Enterprises LTD"/><meta property="og:description" content="Learn about Muniwa Enterprises LTD: our story, mission and vision. Mattress manufacturer in Ruai, Nairobi since 2021."/><meta property="og:url" content="https://muniwaenterprisesltd.com/about.html"/><meta property="og:image" content="https://muniwaenterprisesltd.com/img/slider-1.png"/><meta name="twitter:card" content="summary_large_image"/><script async src="https://www.googletagmanager.com/gtag/js?id=G-96ZZFMQJ5L"></script><script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-96ZZFMQJ5L');</script></head><body class="bg-background font-body-md text-on-surface antialiased min-h-screen"><header class="fixed top-0 left-0 w-full z-50 shadow-[0_1px_8px_rgba(0,0,0,0.06)]">
+<div class="w-full bg-primary text-primary-fixed py-1.5 px-gutter"><div class="w-full flex items-center justify-between font-label-md text-label-md">
+<div class="flex items-center gap-space-sm"><span class="material-symbols-outlined text-[15px] text-secondary-fixed">precision_manufacturing</span><span>Factory in Ruai, Nairobi • Delivering countrywide</span></div>
+<a class="hidden sm:flex items-center gap-1.5 text-primary-fixed hover:text-on-primary transition-colors" href="tel:+254104944012"><span class="material-symbols-outlined text-[15px]">call</span><span>+254 104 944 012</span></a></div></div>
+<div class="w-full bg-primary-container px-gutter"><div class="h-20 flex items-center justify-between gap-space-md">
+<a href="index.html" class="flex items-center gap-space-md"><img alt="Muniwa Enterprises Logo" class="h-12 w-12 rounded-full bg-white object-contain shadow-md" src="img/fav-logo.png"/>
+<div class="flex flex-col"><span class="font-headline-sm text-headline-sm text-on-primary leading-tight">MUNIWA</span><span class="font-label-spec text-label-spec text-primary-fixed-dim tracking-wider uppercase">Enterprises Ltd • Ruai</span></div></a>
+<nav class="hidden xl:flex items-center gap-1 bg-primary/40 p-1 rounded-lg"><a class="px-space-md py-2 rounded-lg font-label-lg text-label-lg text-primary-fixed hover:bg-primary hover:text-on-primary transition-all" href="index.html">Home</a><a class="px-space-md py-2 rounded-lg font-label-lg text-label-lg text-primary-fixed hover:bg-primary hover:text-on-primary transition-all" href="product.html">Mattresses &amp; Bedding</a><a class="px-space-md py-2 rounded-lg font-label-lg text-label-lg text-primary-fixed hover:bg-primary hover:text-on-primary transition-all" href="chemicals.html">Foam Chemicals</a><a class="px-space-md py-2 rounded-lg font-label-lg text-label-lg text-primary-fixed hover:bg-primary hover:text-on-primary transition-all" href="index.html#delivery">Delivery</a><a aria-current="page" class="px-space-md py-2 rounded-lg transition-all bg-primary text-on-primary font-bold font-label-lg text-label-lg" href="about.html">About Us</a><a class="px-space-md py-2 rounded-lg font-label-lg text-label-lg text-primary-fixed hover:bg-primary hover:text-on-primary transition-all" href="contact.html">Contact</a></nav>
+<div class="flex items-center gap-space-md">
+<a class="hidden md:flex items-center gap-1.5 px-space-md py-2.5 rounded-lg bg-secondary-container text-on-secondary-fixed font-label-lg text-label-lg hover:bg-secondary-fixed transition-all" href="requestorder.html"><span class="material-symbols-outlined text-[18px]">request_quote</span><span>Get a Quote</span></a>
+<button id="menuBtn" type="button" aria-label="Open menu" class="xl:hidden w-10 h-10 rounded-lg bg-primary text-on-primary flex items-center justify-center"><span class="material-symbols-outlined ">menu</span></button></div></div></div>
+<div id="mobileMenu" class="hidden xl:hidden bg-primary-container border-t border-primary"><a class="block px-gutter py-3 text-primary-fixed hover:bg-primary font-label-lg text-label-lg" href="index.html">Home</a><a class="block px-gutter py-3 text-primary-fixed hover:bg-primary font-label-lg text-label-lg" href="product.html">Mattresses &amp; Bedding</a><a class="block px-gutter py-3 text-primary-fixed hover:bg-primary font-label-lg text-label-lg" href="chemicals.html">Foam Chemicals</a><a class="block px-gutter py-3 text-primary-fixed hover:bg-primary font-label-lg text-label-lg" href="index.html#delivery">Delivery</a><a class="block px-gutter py-3 text-primary-fixed hover:bg-primary font-label-lg text-label-lg" href="about.html">About Us</a><a class="block px-gutter py-3 text-primary-fixed hover:bg-primary font-label-lg text-label-lg" href="contact.html">Contact</a><a class="block px-gutter py-3 bg-secondary-container text-on-secondary-fixed font-label-lg text-label-lg" href="requestorder.html">Get a Quote</a></div>
+</header><main class="w-full pt-[116px] bg-background"><div class="flex flex-col w-full"><section class="w-full bg-surface-cream-subtle px-gutter py-space-xl relative overflow-hidden"><div class="max-w-7xl mx-auto"><span class="font-label-spec text-label-spec uppercase tracking-wider text-secondary">About Muniwa</span><h1 class="font-headline-xl text-headline-xl text-primary font-bold tracking-tight mt-2 max-w-3xl">Our Story</h1><p class="font-body-lg text-body-lg text-on-surface-variant max-w-2xl mt-3">From humble beginnings in Ruai to a trusted name in comfort and manufacturing.</p></div></section><section class="w-full bg-surface py-space-xl px-gutter scroll-mt-32"><div class="max-w-7xl mx-auto"><div class="grid grid-cols-1 lg:grid-cols-2 gap-space-xl items-center"><div class="flex flex-col gap-space-sm"><span class="font-label-spec text-label-spec uppercase tracking-wider text-secondary">Who we are</span><h2 class="font-headline-lg text-headline-lg text-primary font-bold">Built on Quality, Driven by Comfort</h2>
+<p class="font-body-md text-body-md text-on-surface-variant">Founded in 2021 and based in Ruai, Nairobi, <b class="text-primary">Muniwa Enterprises Limited</b> manufactures and supplies high-quality mattresses designed to improve your sleep.</p>
+<p class="font-body-md text-body-md text-on-surface-variant">We also supply chemicals, plastic buckets, mugs and plates, chairs, pillows and covers, cushions and covers, bedsheets, blankets and non-woven bags.</p>
+<p class="font-body-md text-body-md text-on-surface-variant">We aim to deliver products that combine comfort, durability and good craftsmanship, with a strong focus on quality and customer satisfaction.</p>
+<div><a class="inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-lg font-label-lg text-label-lg shadow-md transition-all hover:scale-[1.02] active:scale-[0.98] bg-secondary-container text-text-charcoal-primary hover:bg-secondary-fixed" href="requestorder.html">Request an order</a></div></div>
+<div class="rounded-2xl overflow-hidden border border-border-earth shadow-md"><img class="w-full h-full object-cover" alt="Muniwa Enterprises" loading="lazy" src="img/slider-2.jpg"/></div></div></div></section><section class="w-full bg-surface-cream-subtle py-space-xl px-gutter scroll-mt-32"><div class="max-w-7xl mx-auto"><div class="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-space-lg"><div><span class="font-label-spec text-label-spec uppercase tracking-wider text-secondary">What drives us</span><h2 class="font-headline-lg text-headline-lg text-primary font-bold">Our Purpose</h2></div></div><div class="grid grid-cols-1 md:grid-cols-3 gap-space-lg"><div class="rounded-2xl bg-surface-container-low border border-border-earth shadow-sm p-space-md"><div class="mb-2"><span class="material-symbols-outlined text-secondary text-[32px]">flag</span></div><h3 class="font-headline-sm text-headline-sm text-primary mb-1">Our Mission</h3><p class="font-body-sm text-body-sm text-on-surface-variant">To support customers and manufacturers by providing premium, sustainable products that foster innovation, elevate comfort and ensure exceptional craftsmanship in every creation.</p></div><div class="rounded-2xl bg-surface-container-low border border-border-earth shadow-sm p-space-md"><div class="mb-2"><span class="material-symbols-outlined text-secondary text-[32px]">visibility</span></div><h3 class="font-headline-sm text-headline-sm text-primary mb-1">Our Vision</h3><p class="font-body-sm text-body-sm text-on-surface-variant">To be East Africa's most trusted name in home comfort and manufacturing solutions, a company customers return to for quality, reliability and value.</p></div><div class="rounded-2xl bg-surface-container-low border border-border-earth shadow-sm p-space-md"><div class="mb-2"><span class="material-symbols-outlined text-secondary text-[32px]">handshake</span></div><h3 class="font-headline-sm text-headline-sm text-primary mb-1">Our Promise</h3><p class="font-body-sm text-body-sm text-on-surface-variant">We stand behind our craftsmanship and are committed to customer satisfaction from first contact to final delivery.</p></div></div></div></section><section class="w-full bg-surface py-space-xl px-gutter scroll-mt-32"><div class="max-w-7xl mx-auto"><div class="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-space-lg"><div><span class="font-label-spec text-label-spec uppercase tracking-wider text-secondary">What we stand for</span><h2 class="font-headline-lg text-headline-lg text-primary font-bold">Our Core Values</h2></div></div><div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-space-lg"><div class="rounded-2xl bg-surface-container-low border border-border-earth shadow-sm p-space-md"><div class="mb-2"><span class="material-symbols-outlined text-secondary text-[32px]">workspace_premium</span></div><h3 class="font-headline-sm text-headline-sm text-primary mb-1">Quality First</h3><p class="font-body-sm text-body-sm text-on-surface-variant">We never compromise on the quality of our materials or craftsmanship.</p></div><div class="rounded-2xl bg-surface-container-low border border-border-earth shadow-sm p-space-md"><div class="mb-2"><span class="material-symbols-outlined text-secondary text-[32px]">support_agent</span></div><h3 class="font-headline-sm text-headline-sm text-primary mb-1">Customer Focus</h3><p class="font-body-sm text-body-sm text-on-surface-variant">Our customers are at the heart of everything we do. Their satisfaction is our success.</p></div><div class="rounded-2xl bg-surface-container-low border border-border-earth shadow-sm p-space-md"><div class="mb-2"><span class="material-symbols-outlined text-secondary text-[32px]">lightbulb</span></div><h3 class="font-headline-sm text-headline-sm text-primary mb-1">Innovation</h3><p class="font-body-sm text-body-sm text-on-surface-variant">We continuously seek better materials, processes and solutions for our clients.</p></div><div class="rounded-2xl bg-surface-container-low border border-border-earth shadow-sm p-space-md"><div class="mb-2"><span class="material-symbols-outlined text-secondary text-[32px]">diversity_3</span></div><h3 class="font-headline-sm text-headline-sm text-primary mb-1">Community</h3><p class="font-body-sm text-body-sm text-on-surface-variant">Proudly Kenyan, we invest in our local community and support the growth of Ruai.</p></div></div></div></section><section class="w-full bg-primary text-on-primary px-gutter py-space-lg"><div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-space-md"><div><h2 class="font-headline-md text-headline-md">Ready to work with us?</h2><p class="font-body-md text-body-md text-primary-fixed-dim">Bulk orders, custom products or a simple question: we are here to help.</p></div><div class="flex gap-space-md flex-wrap"><a class="inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-lg font-label-lg text-label-lg shadow-md transition-all hover:scale-[1.02] active:scale-[0.98] bg-secondary-container text-text-charcoal-primary hover:bg-secondary-fixed" href="contact.html">Contact us today</a><a class="inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-lg font-label-lg text-label-lg border-[1.5px] border-primary text-primary hover:bg-surface-cream-subtle transition-all !border-on-primary !text-on-primary hover:!bg-primary-container" href="product.html">View our products</a></div></div></section></div></main><div class="fixed bottom-6 right-6 z-40 flex items-center gap-2"><div class="hidden sm:flex bg-surface text-text-charcoal-primary px-3 py-1.5 rounded-full shadow-[0_8px_24px_-4px_rgba(31,36,33,0.12)] font-label-md text-label-md border border-border-earth items-center gap-2"><span class="w-2 h-2 rounded-full bg-delivery-amber animate-pulse"></span><span>Chat with us</span></div>
+<a aria-label="Chat on WhatsApp" class="w-14 h-14 rounded-full bg-primary-container text-on-primary flex items-center justify-center shadow-[0_8px_24px_-4px_rgba(31,36,33,0.2)] hover:bg-primary transition-transform hover:scale-105" href="https://wa.me/254104944012?text=Hello%20Muniwa%20Enterprises%2C%20I%20would%20like%20to%20make%20an%20inquiry." target="_blank" rel="noopener"><span class="material-symbols-outlined text-[28px]">forum</span></a></div><footer class="w-full bg-surface-cream-subtle text-text-charcoal-primary pt-space-xl pb-space-lg border-t border-border-earth"><div class="w-full px-gutter max-w-7xl mx-auto">
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-space-xl pb-space-xl">
+<div class="flex flex-col gap-space-sm"><div class="flex items-center gap-space-sm"><img alt="Muniwa Enterprises Logo" class="h-12 w-12 rounded-full object-contain" src="img/fav-logo.png"/><span class="font-headline-md text-headline-md text-primary">MUNIWA</span><span class="font-label-spec text-label-spec text-secondary-fixed-dim bg-primary px-2 py-0.5 rounded">EST. 2021</span></div>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Manufacturer of mattresses and home products, proudly based in Ruai, Nairobi. We also supply foam raw-material chemicals to other manufacturers.</p></div>
+<div class="flex flex-col gap-space-sm"><span class="font-label-lg text-label-lg text-primary uppercase tracking-wider">Products</span><ul class="flex flex-col gap-2 font-body-sm text-body-sm text-on-surface-variant"><li><a class="hover:text-primary transition-colors flex items-center gap-1.5" href="product.html"><span class="material-symbols-outlined text-[14px]">arrow_forward</span>Mattresses &amp; Bedding</a></li><li><a class="hover:text-primary transition-colors flex items-center gap-1.5" href="chemicals.html"><span class="material-symbols-outlined text-[14px]">arrow_forward</span>Foam Chemicals</a></li><li><a class="hover:text-primary transition-colors flex items-center gap-1.5" href="index.html#delivery"><span class="material-symbols-outlined text-[14px]">arrow_forward</span>Delivery</a></li><li><a class="hover:text-primary transition-colors flex items-center gap-1.5" href="requestorder.html"><span class="material-symbols-outlined text-[14px]">arrow_forward</span>Request an Order</a></li></ul></div>
+<div class="flex flex-col gap-space-sm"><span class="font-label-lg text-label-lg text-primary uppercase tracking-wider">Visit Us</span>
+<div class="flex flex-col gap-2 font-body-sm text-body-sm text-on-surface-variant">
+<div class="flex items-start gap-2"><span class="material-symbols-outlined text-primary text-[18px] shrink-0">location_on</span><span>Ruai, Nairobi, Kenya<br/>P.O Box 1300 - 00200</span></div>
+<div class="flex items-start gap-2"><span class="material-symbols-outlined text-primary text-[18px] shrink-0">schedule</span><span>Mon – Sat: 8:00 AM – 6:00 PM<br/>Sunday: Closed</span></div></div></div>
+<div class="flex flex-col gap-space-sm"><span class="font-label-lg text-label-lg text-primary uppercase tracking-wider">Contact</span>
+<div class="flex flex-col gap-2 font-body-sm text-body-sm">
+<a class="flex items-center gap-2 text-primary font-bold hover:underline" href="tel:+254104944012"><span class="material-symbols-outlined text-[18px]">call</span>+254 104 944 012</a>
+<a class="flex items-center gap-2 text-on-surface-variant hover:text-primary transition-colors" href="mailto:info@muniwaenterprisesltd.com"><span class="material-symbols-outlined text-[18px]">mail</span>info@muniwaenterprisesltd.com</a>
+<a class="flex items-center gap-2 text-on-surface-variant hover:text-primary transition-colors" href="https://wa.me/254104944012" target="_blank" rel="noopener"><span class="material-symbols-outlined text-[18px]">chat</span>WhatsApp us</a></div></div></div>
+<div class="border-t border-border-earth pt-space-lg flex flex-col md:flex-row items-center justify-between gap-4 font-body-sm text-body-sm text-on-surface-variant">
+<div>&copy; 2026 Muniwa Enterprises Limited. All rights reserved.</div>
+<div class="flex items-center gap-space-md font-label-md text-label-md"><a class="hover:text-primary transition-colors" href="privacy.html">Privacy Policy</a><span class="text-border-earth">|</span><a class="hover:text-primary transition-colors" href="terms.html">Terms &amp; Conditions</a></div></div></div></footer><script>(function(){var b=document.getElementById("menuBtn"),m=document.getElementById("mobileMenu");if(b&&m){b.addEventListener("click",function(){m.classList.toggle("hidden");});}})();</script><script src="whatsapp-form.js"></script></body></html>

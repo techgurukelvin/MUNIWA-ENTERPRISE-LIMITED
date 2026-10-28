@@ -1,225 +1,33 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="utf-8">
-    <title>Gallery - Muniwa Enterprises LTD</title>
-    <meta content="width=device-width, initial-scale=1.0" name="viewport">
-    <meta content="Gallery - Muniwa Enterprises LTD products" name="description">
-    <link href="https://muniwaenterprisesltd.com/img/fav-logo.png" rel="icon">
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
-    <style>
-        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-        :root { --forest: #1B4332; --forest-mid: #2D6A4F; --forest-light: #52B788; --gold: #D4A017; --gold-light: #F4C842; --cream: #FAF7F0; --warm-white: #FFFEF9; --charcoal: #1A1A18; --mid-gray: #6B7280; --light-gray: #E8E4DA; --radius: 4px; --radius-lg: 12px; --nav-height: 72px; }
-        html { scroll-behavior: smooth; }
-        body { font-family: 'DM Sans', sans-serif; background: var(--warm-white); color: var(--charcoal); font-size: 16px; line-height: 1.7; overflow-x: hidden; }
-        h1, h2, h3, h4 { font-family: 'Playfair Display', serif; line-height: 1.25; }
-        a { text-decoration: none; color: inherit; }
-        img { max-width: 100%; display: block; }
-        ul { list-style: none; }
-        #nav { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; background: var(--forest); box-shadow: 0 2px 30px rgba(0,0,0,0.15); }
-        .nav-inner { max-width: 1200px; margin: 0 auto; padding: 0 2rem; display: flex; align-items: center; justify-content: space-between; height: var(--nav-height); }
-        .nav-brand { display: flex; align-items: center; gap: 12px; }
-        .nav-brand img { width: 44px; height: 44px; object-fit: contain; filter: brightness(0) invert(1); }
-        .nav-brand span { font-family: 'Playfair Display', serif; font-size: 18px; font-weight: 700; color: white; }
-        .nav-links { display: flex; align-items: center; gap: 2rem; }
-        .nav-links a { color: rgba(255,255,255,0.85); font-size: 14px; font-weight: 500; letter-spacing: 0.5px; text-transform: uppercase; transition: color 0.2s; position: relative; padding-bottom: 4px; }
-        .nav-links a::after { content: ''; position: absolute; bottom: 0; left: 0; width: 0; height: 1.5px; background: var(--gold-light); transition: width 0.3s ease; }
-        .nav-links a:hover { color: white; }
-        .nav-links a:hover::after, .nav-links a.active::after { width: 100%; }
-        .nav-links a.active { color: white; }
-        .nav-cta { background: var(--gold) !important; color: var(--charcoal) !important; padding: 8px 20px; border-radius: var(--radius); font-weight: 600 !important; }
-        .nav-cta:hover { background: var(--gold-light) !important; }
-        .nav-cta::after { display: none !important; }
-        .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 8px; background: none; border: none; }
-        .hamburger span { display: block; width: 24px; height: 2px; background: white; border-radius: 2px; }
-        .page-hero { background: var(--forest); padding: calc(var(--nav-height) + 50px) 0 60px; position: relative; overflow: hidden; }
-        .page-hero::before { content: ''; position: absolute; inset: 0; background-image: radial-gradient(circle at 80% 50%, rgba(82,183,136,0.1) 0%, transparent 60%); }
-        .page-hero-inner { max-width: 1200px; margin: 0 auto; padding: 0 2rem; position: relative; z-index: 1; }
-        .page-hero h1 { font-size: clamp(2rem, 4vw, 3rem); color: white; margin-bottom: 0.75rem; }
-        .page-hero h1 em { font-style: italic; color: var(--gold-light); }
-        .page-hero p { color: rgba(255,255,255,0.7); font-size: 17px; max-width: 520px; }
-        .breadcrumb { display: flex; align-items: center; gap: 8px; margin-bottom: 1.5rem; }
-        .breadcrumb a { color: rgba(255,255,255,0.5); font-size: 13px; }
-        .breadcrumb a:hover { color: var(--gold-light); }
-        .breadcrumb span { color: rgba(255,255,255,0.3); font-size: 13px; }
-        .container { max-width: 1200px; margin: 0 auto; padding: 0 2rem; }
-        .filter-bar { background: white; border-bottom: 1px solid var(--light-gray); position: sticky; top: var(--nav-height); z-index: 100; }
-        .filter-inner { max-width: 1200px; margin: 0 auto; padding: 0 2rem; display: flex; gap: 0.5rem; overflow-x: auto; }
-        .filter-btn { padding: 1rem 1.25rem; font-family: 'DM Sans', sans-serif; font-size: 14px; font-weight: 500; color: var(--mid-gray); background: none; border: none; border-bottom: 2px solid transparent; cursor: pointer; white-space: nowrap; transition: all 0.2s; }
-        .filter-btn:hover { color: var(--forest); }
-        .filter-btn.active { color: var(--forest); border-bottom-color: var(--forest); font-weight: 600; }
-        .gallery-section { padding: 60px 0 100px; background: var(--cream); }
-        .gallery-grid { columns: 4; column-gap: 1rem; margin-top: 2rem; }
-        .gallery-item { break-inside: avoid; margin-bottom: 1rem; border-radius: var(--radius-lg); overflow: hidden; position: relative; cursor: pointer; }
-        .gallery-item img { width: 100%; height: auto; display: block; transition: transform 0.4s ease; }
-        .gallery-item:hover img { transform: scale(1.04); }
-        .gallery-item.hidden { display: none; }
-        .gallery-overlay { position: absolute; inset: 0; background: rgba(27,67,50,0.0); display: flex; align-items: center; justify-content: center; transition: background 0.3s; }
-        .gallery-item:hover .gallery-overlay { background: rgba(27,67,50,0.45); }
-        .gallery-overlay-icon { opacity: 0; transition: opacity 0.3s; color: white; }
-        .gallery-item:hover .gallery-overlay-icon { opacity: 1; }
-        .lightbox { position: fixed; inset: 0; background: rgba(0,0,0,0.92); z-index: 2000; display: none; align-items: center; justify-content: center; padding: 2rem; }
-        .lightbox.open { display: flex; }
-        .lightbox-img { max-width: 90vw; max-height: 85vh; object-fit: contain; border-radius: var(--radius-lg); }
-        .lightbox-close { position: absolute; top: 1.5rem; right: 1.5rem; width: 44px; height: 44px; background: rgba(255,255,255,0.1); border: none; border-radius: 50%; color: white; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 20px; transition: background 0.2s; }
-        .lightbox-close:hover { background: rgba(255,255,255,0.2); }
-        .lightbox-caption { position: absolute; bottom: 1.5rem; left: 50%; transform: translateX(-50%); color: rgba(255,255,255,0.7); font-size: 14px; text-align: center; }
-        .lightbox-nav { position: absolute; top: 50%; transform: translateY(-50%); background: rgba(255,255,255,0.1); border: none; border-radius: 50%; width: 48px; height: 48px; color: white; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 24px; transition: background 0.2s; }
-        .lightbox-nav:hover { background: rgba(255,255,255,0.2); }
-        .lightbox-prev { left: 1.5rem; }
-        .lightbox-next { right: 1.5rem; }
-        .cta-banner { background: var(--forest); padding: 80px 0; text-align: center; }
-        .cta-banner h2 { font-size: clamp(1.75rem, 3vw, 2.5rem); color: white; margin-bottom: 1rem; }
-        .cta-banner p { color: rgba(255,255,255,0.7); font-size: 17px; margin-bottom: 2rem; }
-        .btn-primary { background: var(--gold); color: var(--charcoal); padding: 14px 32px; border-radius: var(--radius); font-weight: 600; font-size: 15px; transition: all 0.25s; display: inline-block; }
-        .btn-primary:hover { background: var(--gold-light); transform: translateY(-2px); }
-        footer { background: var(--charcoal); color: rgba(255,255,255,0.7); padding: 64px 0 0; }
-        .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 2fr; gap: 3rem; padding-bottom: 3rem; }
-        .footer-brand img { width: 48px; height: 48px; object-fit: contain; filter: brightness(0) invert(1); margin-bottom: 1rem; }
-        .footer-brand p { font-size: 14px; line-height: 1.7; max-width: 280px; }
-        .footer-col h5 { font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 600; text-transform: uppercase; letter-spacing: 1.5px; color: white; margin-bottom: 1.25rem; }
-        .footer-col ul li { margin-bottom: 0.6rem; }
-        .footer-col ul li a { font-size: 14px; color: rgba(255,255,255,0.55); transition: color 0.2s; }
-        .footer-col ul li a:hover { color: var(--gold-light); }
-        .footer-bottom { border-top: 1px solid rgba(255,255,255,0.08); padding: 1.5rem 0; display: flex; justify-content: space-between; align-items: center; }
-        .footer-bottom p { font-size: 13px; color: rgba(255,255,255,0.4); }
-        .whatsapp-btn { position: fixed; bottom: 5rem; right: 1.5rem; width: 52px; height: 52px; background: #25D366; border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 20px rgba(37,211,102,0.4); z-index: 900; transition: transform 0.2s; }
-        .whatsapp-btn:hover { transform: scale(1.1); }
-        .back-top { position: fixed; bottom: 1.5rem; right: 1.5rem; width: 44px; height: 44px; background: var(--forest); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; opacity: 0; pointer-events: none; transition: opacity 0.3s; z-index: 900; }
-        .back-top.visible { opacity: 1; pointer-events: auto; }
-        @media (max-width: 1024px) { .gallery-grid { columns: 3; } .footer-grid { grid-template-columns: 1fr 1fr; } }
-        @media (max-width: 768px) {
-            .nav-links { display: none; flex-direction: column; gap: 0; position: absolute; top: var(--nav-height); left: 0; right: 0; background: var(--forest); padding: 1rem 2rem 1.5rem; box-shadow: 0 8px 24px rgba(0,0,0,0.2); }
-            .nav-links.open { display: flex; }
-            .nav-links a { padding: 14px 0; border-bottom: 1px solid rgba(255,255,255,0.08); width: 100%; }
-            .hamburger { display: flex; }
-            .gallery-grid { columns: 2; }
-            .lightbox-nav { display: none; }
-            .footer-grid { grid-template-columns: 1fr; }
-            .footer-bottom { flex-direction: column; gap: 0.5rem; text-align: center; }
-        }
-        @media (max-width: 480px) { .gallery-grid { columns: 1; } }
-    </style>
-</head>
-<body>
-<nav id="nav">
-    <div class="nav-inner">
-        <a href="index.html" class="nav-brand">
-            <img src="https://muniwaenterprisesltd.com/img/fav-logo.png" alt="Muniwa Enterprises LTD">
-            <span>Muniwa Enterprises</span>
-        </a>
-        <div class="nav-links" id="navLinks">
-            <a href="index.html">Home</a>
-            <a href="about.html">About</a>
-            <a href="product.html">Products</a>
-            <a href="gallery.html" class="active">Gallery</a>
-            <a href="contact.html">Contact</a>
-            <a href="requestorder.html" class="nav-cta">Request Order</a>
-        </div>
-        <button class="hamburger" id="hamburger" onclick="toggleNav()"><span></span><span></span><span></span></button>
-    </div>
-</nav>
 
-<div class="page-hero">
-    <div class="page-hero-inner">
-        <div class="breadcrumb"><a href="index.html">Home</a><span>›</span><span style="color:rgba(255,255,255,0.7);">Gallery</span></div>
-        <h1>Our <em>Gallery</em></h1>
-        <p>A look at our products, our workspace, and the quality that goes into everything we make.</p>
-    </div>
-</div>
-
-<div class="filter-bar">
-    <div class="filter-inner">
-        <button class="filter-btn active" onclick="filterGallery('all', this)">All</button>
-        <button class="filter-btn" onclick="filterGallery('mattress', this)">Mattresses</button>
-        <button class="filter-btn" onclick="filterGallery('bags', this)">Bags</button>
-        <button class="filter-btn" onclick="filterGallery('home', this)">Home Products</button>
-        <button class="filter-btn" onclick="filterGallery('chemicals', this)">Chemicals</button>
-    </div>
-</div>
-
-<section class="gallery-section">
-    <div class="container">
-        <div class="gallery-grid" id="galleryGrid">
-            <div class="gallery-item" data-cat="mattress" onclick="openLightbox(this)"><img src="https://muniwaenterprisesltd.com/img/mattress.jpg" alt="Mattress" data-caption="Premium Mattresses"><div class="gallery-overlay"><div class="gallery-overlay-icon"><svg width="32" height="32" fill="none" stroke="white" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg></div></div></div>
-            <div class="gallery-item" data-cat="home" onclick="openLightbox(this)"><img src="https://muniwaenterprisesltd.com/img/slider-1.png" alt="Products" data-caption="Our Products"><div class="gallery-overlay"><div class="gallery-overlay-icon"><svg width="32" height="32" fill="none" stroke="white" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg></div></div></div>
-            <div class="gallery-item" data-cat="bags" onclick="openLightbox(this)"><img src="https://muniwaenterprisesltd.com/img/non-woven-bag.jpg" alt="Non-woven Bags" data-caption="Non-Woven Bags"><div class="gallery-overlay"><div class="gallery-overlay-icon"><svg width="32" height="32" fill="none" stroke="white" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg></div></div></div>
-            <div class="gallery-item" data-cat="home" onclick="openLightbox(this)"><img src="https://muniwaenterprisesltd.com/img/plastic-chair.jpg" alt="Plastic Chairs" data-caption="Plastic Chairs"><div class="gallery-overlay"><div class="gallery-overlay-icon"><svg width="32" height="32" fill="none" stroke="white" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg></div></div></div>
-            <div class="gallery-item" data-cat="chemicals" onclick="openLightbox(this)"><img src="https://muniwaenterprisesltd.com/img/TDI-Chemicals.jpg" alt="Chemicals" data-caption="Raw Material Chemicals"><div class="gallery-overlay"><div class="gallery-overlay-icon"><svg width="32" height="32" fill="none" stroke="white" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg></div></div></div>
-            <div class="gallery-item" data-cat="home" onclick="openLightbox(this)"><img src="https://muniwaenterprisesltd.com/img/pillow.jpg" alt="Pillows" data-caption="Pillows & Covers"><div class="gallery-overlay"><div class="gallery-overlay-icon"><svg width="32" height="32" fill="none" stroke="white" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg></div></div></div>
-            <div class="gallery-item" data-cat="home" onclick="openLightbox(this)"><img src="https://muniwaenterprisesltd.com/img/bedsheet.jpg" alt="Bedsheets" data-caption="Bedsheets"><div class="gallery-overlay"><div class="gallery-overlay-icon"><svg width="32" height="32" fill="none" stroke="white" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg></div></div></div>
-            <div class="gallery-item" data-cat="home" onclick="openLightbox(this)"><img src="https://muniwaenterprisesltd.com/img/cushion.jpg" alt="Cushions" data-caption="Cushions & Covers"><div class="gallery-overlay"><div class="gallery-overlay-icon"><svg width="32" height="32" fill="none" stroke="white" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg></div></div></div>
-            <div class="gallery-item" data-cat="home" onclick="openLightbox(this)"><img src="https://muniwaenterprisesltd.com/img/blankets.jpg" alt="Blankets" data-caption="Blankets"><div class="gallery-overlay"><div class="gallery-overlay-icon"><svg width="32" height="32" fill="none" stroke="white" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg></div></div></div>
-            <div class="gallery-item" data-cat="mattress" onclick="openLightbox(this)"><img src="https://muniwaenterprisesltd.com/img/slider-2.jpg" alt="Muniwa" data-caption="Muniwa Enterprises"><div class="gallery-overlay"><div class="gallery-overlay-icon"><svg width="32" height="32" fill="none" stroke="white" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg></div></div></div>
-            <div class="gallery-item" data-cat="mattress" onclick="openLightbox(this)"><img src="https://muniwaenterprisesltd.com/img/slider-3.png" alt="Muniwa Products" data-caption="Our Range"><div class="gallery-overlay"><div class="gallery-overlay-icon"><svg width="32" height="32" fill="none" stroke="white" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg></div></div></div>
-        </div>
-    </div>
-</section>
-
-<div class="lightbox" id="lightbox" onclick="closeLightboxOnBg(event)">
-    <button class="lightbox-close" onclick="closeLightbox()">✕</button>
-    <button class="lightbox-nav lightbox-prev" onclick="navigateLightbox(-1)">‹</button>
-    <img class="lightbox-img" id="lightboxImg" src="" alt="">
-    <button class="lightbox-nav lightbox-next" onclick="navigateLightbox(1)">›</button>
-    <div class="lightbox-caption" id="lightboxCaption"></div>
-</div>
-
-<section class="cta-banner">
-    <div class="container">
-        <h2>Like What You See?</h2>
-        <p>Place an order or get in touch to discuss your requirements.</p>
-        <a href="requestorder.html" class="btn-primary">Request an Order</a>
-    </div>
-</section>
-
-<footer>
-    <div class="container">
-        <div class="footer-grid">
-            <div class="footer-brand"><img src="https://muniwaenterprisesltd.com/img/fav-logo.png" alt="Muniwa Enterprises"><h4 style="font-family:'Playfair Display',serif;color:white;font-size:18px;margin-bottom:0.75rem;">Muniwa Enterprises</h4><p>Premium mattresses and home products, proudly manufactured in Ruai, Nairobi since 2021.</p></div>
-            <div class="footer-col"><h5>Company</h5><ul><li><a href="index.html">Home</a></li><li><a href="about.html">About Us</a></li><li><a href="product.html">Products</a></li><li><a href="gallery.html">Gallery</a></li><li><a href="contact.html">Contact</a></li></ul></div>
-            <div class="footer-col"><h5>Legal</h5><ul><li><a href="#">Privacy Policy</a></li><li><a href="#">Terms & Conditions</a></li><li><a href="requestorder.html">Request Order</a></li></ul></div>
-            <div class="footer-col"><h5>Contact</h5><ul><li><a href="tel:+254104944012">+254 104 944 012</a></li><li><a href="mailto:info@muniwaenterprisesltd.com">info@muniwaenterprisesltd.com</a></li><li><a href="https://wa.me/254104944012" target="_blank">WhatsApp Us</a></li></ul></div>
-        </div>
-        <div class="footer-bottom"><p>&copy; 2025 Muniwa Enterprises Limited. All rights reserved.</p><p>Ruai, Nairobi, Kenya</p></div>
-    </div>
-</footer>
-
-<a href="https://wa.me/254104944012?text=Hello%20Muniwa%20Enterprises!" class="whatsapp-btn" target="_blank" rel="noopener" aria-label="WhatsApp"><svg width="28" height="28" fill="white" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z"/></svg></a>
-<a href="#" class="back-top" id="backTop"><svg width="18" height="18" fill="none" stroke="white" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="18 15 12 9 6 15"/></svg></a>
-
-<script>
-    function toggleNav() { document.getElementById('navLinks').classList.toggle('open'); }
-    document.querySelectorAll('#navLinks a').forEach(l => l.addEventListener('click', () => document.getElementById('navLinks').classList.remove('open')));
-    document.addEventListener('click', e => { const n = document.getElementById('navLinks'), b = document.getElementById('hamburger'); if (n.classList.contains('open') && !n.contains(e.target) && !b.contains(e.target)) n.classList.remove('open'); });
-    window.addEventListener('scroll', () => document.getElementById('backTop').classList.toggle('visible', window.scrollY > 300));
-    function filterGallery(cat, btn) {
-        document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-        document.querySelectorAll('.gallery-item').forEach(item => { item.classList.toggle('hidden', cat !== 'all' && item.dataset.cat !== cat); });
-    }
-    let currentIndex = 0, visibleItems = [];
-    function openLightbox(el) {
-        visibleItems = [...document.querySelectorAll('.gallery-item:not(.hidden)')];
-        currentIndex = visibleItems.indexOf(el);
-        showLightboxItem(currentIndex);
-        document.getElementById('lightbox').classList.add('open');
-        document.body.style.overflow = 'hidden';
-    }
-    function showLightboxItem(idx) {
-        const img = visibleItems[idx].querySelector('img');
-        document.getElementById('lightboxImg').src = img.src;
-        document.getElementById('lightboxImg').alt = img.alt;
-        document.getElementById('lightboxCaption').textContent = img.dataset.caption || img.alt;
-    }
-    function navigateLightbox(dir) { currentIndex = (currentIndex + dir + visibleItems.length) % visibleItems.length; showLightboxItem(currentIndex); }
-    function closeLightbox() { document.getElementById('lightbox').classList.remove('open'); document.body.style.overflow = ''; }
-    function closeLightboxOnBg(e) { if (e.target === document.getElementById('lightbox')) closeLightbox(); }
-    document.addEventListener('keydown', e => {
-        if (!document.getElementById('lightbox').classList.contains('open')) return;
-        if (e.key === 'Escape') closeLightbox();
-        if (e.key === 'ArrowRight') navigateLightbox(1);
-        if (e.key === 'ArrowLeft') navigateLightbox(-1);
-    });
-</script>
-</body>
-</html>
+<html lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><meta content="web_standard" name="shell-type"/><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&amp;family=Playfair+Display:ital,wght@0,400..900;1,400..900&amp;display=swap" rel="stylesheet"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config={darkMode:"class",theme:{extend:{"colors":{"primary-fixed-dim":"#a5d0b9","on-tertiary-container":"#72a9f0","surface-container-high":"#ebe8e1","surface":"#fcf9f2","outline":"#717973","primary-fixed":"#c1ecd4","on-primary":"#ffffff","text-charcoal-secondary":"#22252A","error":"#ba1a1a","on-primary-fixed":"#002114","border-earth":"#E2DACB","tertiary-fixed-dim":"#a3c9ff","on-surface-variant":"#414844","delivery-amber":"#C67D0A","on-secondary-fixed-variant":"#5c4300","tertiary-container":"#003d70","surface-bright":"#fcf9f2","on-tertiary-fixed":"#001c39","error-container":"#ffdad6","surface-tint":"#3f6653","inverse-primary":"#a5d0b9","on-secondary-fixed":"#261a00","on-secondary-container":"#715300","secondary-fixed":"#ffdfa0","text-charcoal-primary":"#1F2421","on-primary-fixed-variant":"#274e3d","secondary":"#795900","surface-container-lowest":"#ffffff","surface-variant":"#e5e2db","on-tertiary":"#ffffff","on-error-container":"#93000a","inverse-surface":"#31312c","on-background":"#1c1c18","surface-container-highest":"#e5e2db","surface-cream-subtle":"#F3EFE6","surface-dim":"#dcdad3","on-error":"#ffffff","surface-container":"#f0eee7","primary-container":"#1b4332","secondary-container":"#ffc641","on-surface":"#1c1c18","tertiary-fixed":"#d3e3ff","tertiary":"#00274b","industrial-danger-sds":"#B9382B","on-secondary":"#ffffff","on-tertiary-fixed-variant":"#004882","surface-container-low":"#f6f3ec","secondary-fixed-dim":"#f6be39","outline-variant":"#c1c8c2","on-primary-container":"#86af99","background":"#fcf9f2","primary":"#012d1d","inverse-on-surface":"#f3f0ea"},"borderRadius":{"DEFAULT":"0.25rem","lg":"0.5rem","xl":"0.75rem","full":"9999px"},"spacing":{"gutter-mobile":"1rem","space-md":"1rem","gutter":"1.5rem","margin-mobile":"1.25rem","space-lg":"1.5rem","space-sm":"0.5rem","space-xl":"2.5rem","margin":"3rem","space-xs":"0.25rem"},"fontFamily":{"headline-sm":["Playfair Display"],"body-md":["DM Sans"],"headline-md":["Playfair Display"],"label-lg":["DM Sans"],"body-lg":["DM Sans"],"headline-xl":["Playfair Display"],"headline-xl-mobile":["Playfair Display"],"label-spec":["DM Sans"],"headline-lg-mobile":["Playfair Display"],"body-sm":["DM Sans"],"headline-lg":["Playfair Display"],"label-md":["DM Sans"]},"fontSize":{"headline-sm":["20px",{"lineHeight":"28px","fontWeight":"600"}],"body-md":["16px",{"lineHeight":"24px","fontWeight":"400"}],"headline-md":["26px",{"lineHeight":"34px","fontWeight":"600"}],"label-lg":["14px",{"lineHeight":"20px","fontWeight":"700"}],"body-lg":["18px",{"lineHeight":"28px","fontWeight":"400"}],"headline-xl":["48px",{"lineHeight":"56px","fontWeight":"700"}],"headline-xl-mobile":["34px",{"lineHeight":"42px","fontWeight":"700"}],"label-spec":["11px",{"lineHeight":"14px","fontWeight":"700"}],"headline-lg-mobile":["28px",{"lineHeight":"36px","fontWeight":"600"}],"body-sm":["14px",{"lineHeight":"20px","fontWeight":"400"}],"headline-lg":["36px",{"lineHeight":"44px","fontWeight":"600"}],"label-md":["12px",{"lineHeight":"16px","fontWeight":"600"}]}}}};</script><title>Gallery | Muniwa Enterprises LTD</title><meta name="description" content="Gallery of Muniwa Enterprises LTD mattresses, bedding, bags and chemicals."/><link href="img/fav-logo.png" rel="icon"/><link rel="canonical" href="https://muniwaenterprisesltd.com/gallery.html"/><meta property="og:type" content="website"/><meta property="og:site_name" content="Muniwa Enterprises LTD"/><meta property="og:title" content="Gallery | Muniwa Enterprises LTD"/><meta property="og:description" content="Gallery of Muniwa Enterprises LTD mattresses, bedding, bags and chemicals."/><meta property="og:url" content="https://muniwaenterprisesltd.com/gallery.html"/><meta property="og:image" content="https://muniwaenterprisesltd.com/img/slider-1.png"/><meta name="twitter:card" content="summary_large_image"/><script async src="https://www.googletagmanager.com/gtag/js?id=G-96ZZFMQJ5L"></script><script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-96ZZFMQJ5L');</script></head><body class="bg-background font-body-md text-on-surface antialiased min-h-screen"><header class="fixed top-0 left-0 w-full z-50 shadow-[0_1px_8px_rgba(0,0,0,0.06)]">
+<div class="w-full bg-primary text-primary-fixed py-1.5 px-gutter"><div class="w-full flex items-center justify-between font-label-md text-label-md">
+<div class="flex items-center gap-space-sm"><span class="material-symbols-outlined text-[15px] text-secondary-fixed">precision_manufacturing</span><span>Factory in Ruai, Nairobi • Delivering countrywide</span></div>
+<a class="hidden sm:flex items-center gap-1.5 text-primary-fixed hover:text-on-primary transition-colors" href="tel:+254104944012"><span class="material-symbols-outlined text-[15px]">call</span><span>+254 104 944 012</span></a></div></div>
+<div class="w-full bg-primary-container px-gutter"><div class="h-20 flex items-center justify-between gap-space-md">
+<a href="index.html" class="flex items-center gap-space-md"><img alt="Muniwa Enterprises Logo" class="h-12 w-12 rounded-full bg-white object-contain shadow-md" src="img/fav-logo.png"/>
+<div class="flex flex-col"><span class="font-headline-sm text-headline-sm text-on-primary leading-tight">MUNIWA</span><span class="font-label-spec text-label-spec text-primary-fixed-dim tracking-wider uppercase">Enterprises Ltd • Ruai</span></div></a>
+<nav class="hidden xl:flex items-center gap-1 bg-primary/40 p-1 rounded-lg"><a class="px-space-md py-2 rounded-lg font-label-lg text-label-lg text-primary-fixed hover:bg-primary hover:text-on-primary transition-all" href="index.html">Home</a><a class="px-space-md py-2 rounded-lg font-label-lg text-label-lg text-primary-fixed hover:bg-primary hover:text-on-primary transition-all" href="product.html">Mattresses &amp; Bedding</a><a class="px-space-md py-2 rounded-lg font-label-lg text-label-lg text-primary-fixed hover:bg-primary hover:text-on-primary transition-all" href="chemicals.html">Foam Chemicals</a><a class="px-space-md py-2 rounded-lg font-label-lg text-label-lg text-primary-fixed hover:bg-primary hover:text-on-primary transition-all" href="index.html#delivery">Delivery</a><a class="px-space-md py-2 rounded-lg font-label-lg text-label-lg text-primary-fixed hover:bg-primary hover:text-on-primary transition-all" href="about.html">About Us</a><a class="px-space-md py-2 rounded-lg font-label-lg text-label-lg text-primary-fixed hover:bg-primary hover:text-on-primary transition-all" href="contact.html">Contact</a></nav>
+<div class="flex items-center gap-space-md">
+<a class="hidden md:flex items-center gap-1.5 px-space-md py-2.5 rounded-lg bg-secondary-container text-on-secondary-fixed font-label-lg text-label-lg hover:bg-secondary-fixed transition-all" href="requestorder.html"><span class="material-symbols-outlined text-[18px]">request_quote</span><span>Get a Quote</span></a>
+<button id="menuBtn" type="button" aria-label="Open menu" class="xl:hidden w-10 h-10 rounded-lg bg-primary text-on-primary flex items-center justify-center"><span class="material-symbols-outlined ">menu</span></button></div></div></div>
+<div id="mobileMenu" class="hidden xl:hidden bg-primary-container border-t border-primary"><a class="block px-gutter py-3 text-primary-fixed hover:bg-primary font-label-lg text-label-lg" href="index.html">Home</a><a class="block px-gutter py-3 text-primary-fixed hover:bg-primary font-label-lg text-label-lg" href="product.html">Mattresses &amp; Bedding</a><a class="block px-gutter py-3 text-primary-fixed hover:bg-primary font-label-lg text-label-lg" href="chemicals.html">Foam Chemicals</a><a class="block px-gutter py-3 text-primary-fixed hover:bg-primary font-label-lg text-label-lg" href="index.html#delivery">Delivery</a><a class="block px-gutter py-3 text-primary-fixed hover:bg-primary font-label-lg text-label-lg" href="about.html">About Us</a><a class="block px-gutter py-3 text-primary-fixed hover:bg-primary font-label-lg text-label-lg" href="contact.html">Contact</a><a class="block px-gutter py-3 bg-secondary-container text-on-secondary-fixed font-label-lg text-label-lg" href="requestorder.html">Get a Quote</a></div>
+</header><main class="w-full pt-[116px] bg-background"><div class="flex flex-col w-full"><section class="w-full bg-surface-cream-subtle px-gutter py-space-xl relative overflow-hidden"><div class="max-w-7xl mx-auto"><span class="font-label-spec text-label-spec uppercase tracking-wider text-secondary">Gallery</span><h1 class="font-headline-xl text-headline-xl text-primary font-bold tracking-tight mt-2 max-w-3xl">Our Products &amp; Workspace</h1><p class="font-body-lg text-body-lg text-on-surface-variant max-w-2xl mt-3">A look at our products and the quality that goes into everything we make.</p></div></section><section class="w-full bg-surface py-space-xl px-gutter scroll-mt-32"><div class="max-w-7xl mx-auto"><div class="flex flex-wrap gap-2 mb-space-lg"><button type="button" data-f="all" class="gal-btn px-4 py-2 rounded-full border border-border-earth font-label-md text-label-md bg-primary text-on-primary">All</button><button type="button" data-f="mattress" class="gal-btn px-4 py-2 rounded-full border border-border-earth font-label-md text-label-md bg-surface text-primary">Mattresses</button><button type="button" data-f="bags" class="gal-btn px-4 py-2 rounded-full border border-border-earth font-label-md text-label-md bg-surface text-primary">Bags</button><button type="button" data-f="home" class="gal-btn px-4 py-2 rounded-full border border-border-earth font-label-md text-label-md bg-surface text-primary">Home products</button><button type="button" data-f="chemicals" class="gal-btn px-4 py-2 rounded-full border border-border-earth font-label-md text-label-md bg-surface text-primary">Chemicals</button></div><div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-space-md"><figure data-cat="mattress" class="gal-item rounded-xl overflow-hidden border border-border-earth bg-surface-container-low"><img class="w-full h-64 object-cover" loading="lazy" alt="Mattress" src="img/mattress.jpg"/><figcaption class="px-3 py-2 font-label-md text-label-md text-primary">Mattress</figcaption></figure><figure data-cat="mattress" class="gal-item rounded-xl overflow-hidden border border-border-earth bg-surface-container-low"><img class="w-full h-64 object-cover" loading="lazy" alt="Products" src="img/slider-1.png"/><figcaption class="px-3 py-2 font-label-md text-label-md text-primary">Products</figcaption></figure><figure data-cat="bags" class="gal-item rounded-xl overflow-hidden border border-border-earth bg-surface-container-low"><img class="w-full h-64 object-cover" loading="lazy" alt="Non-woven bags" src="img/non-woven-bag.jpg"/><figcaption class="px-3 py-2 font-label-md text-label-md text-primary">Non-woven bags</figcaption></figure><figure data-cat="home" class="gal-item rounded-xl overflow-hidden border border-border-earth bg-surface-container-low"><img class="w-full h-64 object-cover" loading="lazy" alt="Plastic chairs" src="img/plastic-chair.jpg"/><figcaption class="px-3 py-2 font-label-md text-label-md text-primary">Plastic chairs</figcaption></figure><figure data-cat="chemicals" class="gal-item rounded-xl overflow-hidden border border-border-earth bg-surface-container-low"><img class="w-full h-64 object-cover" loading="lazy" alt="Chemicals" src="img/TDI-Chemicals.jpg"/><figcaption class="px-3 py-2 font-label-md text-label-md text-primary">Chemicals</figcaption></figure><figure data-cat="home" class="gal-item rounded-xl overflow-hidden border border-border-earth bg-surface-container-low"><img class="w-full h-64 object-cover" loading="lazy" alt="Pillows" src="img/pillow.jpg"/><figcaption class="px-3 py-2 font-label-md text-label-md text-primary">Pillows</figcaption></figure><figure data-cat="home" class="gal-item rounded-xl overflow-hidden border border-border-earth bg-surface-container-low"><img class="w-full h-64 object-cover" loading="lazy" alt="Bedsheets" src="img/bedsheet.jpg"/><figcaption class="px-3 py-2 font-label-md text-label-md text-primary">Bedsheets</figcaption></figure><figure data-cat="home" class="gal-item rounded-xl overflow-hidden border border-border-earth bg-surface-container-low"><img class="w-full h-64 object-cover" loading="lazy" alt="Cushions" src="img/cushion.jpg"/><figcaption class="px-3 py-2 font-label-md text-label-md text-primary">Cushions</figcaption></figure><figure data-cat="home" class="gal-item rounded-xl overflow-hidden border border-border-earth bg-surface-container-low"><img class="w-full h-64 object-cover" loading="lazy" alt="Blankets" src="img/blankets.jpg"/><figcaption class="px-3 py-2 font-label-md text-label-md text-primary">Blankets</figcaption></figure><figure data-cat="mattress" class="gal-item rounded-xl overflow-hidden border border-border-earth bg-surface-container-low"><img class="w-full h-64 object-cover" loading="lazy" alt="Muniwa" src="img/slider-2.jpg"/><figcaption class="px-3 py-2 font-label-md text-label-md text-primary">Muniwa</figcaption></figure><figure data-cat="mattress" class="gal-item rounded-xl overflow-hidden border border-border-earth bg-surface-container-low"><img class="w-full h-64 object-cover" loading="lazy" alt="Muniwa products" src="img/slider-3.png"/><figcaption class="px-3 py-2 font-label-md text-label-md text-primary">Muniwa products</figcaption></figure></div><div class="text-center mt-space-xl"><p class="font-body-lg text-body-lg text-on-surface-variant mb-3">Like what you see? Place an order or get in touch.</p><a class="inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-lg font-label-lg text-label-lg shadow-md transition-all hover:scale-[1.02] active:scale-[0.98] bg-secondary-container text-text-charcoal-primary hover:bg-secondary-fixed" href="requestorder.html">Request an order</a></div></div></section></div></main><div class="fixed bottom-6 right-6 z-40 flex items-center gap-2"><div class="hidden sm:flex bg-surface text-text-charcoal-primary px-3 py-1.5 rounded-full shadow-[0_8px_24px_-4px_rgba(31,36,33,0.12)] font-label-md text-label-md border border-border-earth items-center gap-2"><span class="w-2 h-2 rounded-full bg-delivery-amber animate-pulse"></span><span>Chat with us</span></div>
+<a aria-label="Chat on WhatsApp" class="w-14 h-14 rounded-full bg-primary-container text-on-primary flex items-center justify-center shadow-[0_8px_24px_-4px_rgba(31,36,33,0.2)] hover:bg-primary transition-transform hover:scale-105" href="https://wa.me/254104944012?text=Hello%20Muniwa%20Enterprises%2C%20I%20would%20like%20to%20make%20an%20inquiry." target="_blank" rel="noopener"><span class="material-symbols-outlined text-[28px]">forum</span></a></div><footer class="w-full bg-surface-cream-subtle text-text-charcoal-primary pt-space-xl pb-space-lg border-t border-border-earth"><div class="w-full px-gutter max-w-7xl mx-auto">
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-space-xl pb-space-xl">
+<div class="flex flex-col gap-space-sm"><div class="flex items-center gap-space-sm"><img alt="Muniwa Enterprises Logo" class="h-12 w-12 rounded-full object-contain" src="img/fav-logo.png"/><span class="font-headline-md text-headline-md text-primary">MUNIWA</span><span class="font-label-spec text-label-spec text-secondary-fixed-dim bg-primary px-2 py-0.5 rounded">EST. 2021</span></div>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Manufacturer of mattresses and home products, proudly based in Ruai, Nairobi. We also supply foam raw-material chemicals to other manufacturers.</p></div>
+<div class="flex flex-col gap-space-sm"><span class="font-label-lg text-label-lg text-primary uppercase tracking-wider">Products</span><ul class="flex flex-col gap-2 font-body-sm text-body-sm text-on-surface-variant"><li><a class="hover:text-primary transition-colors flex items-center gap-1.5" href="product.html"><span class="material-symbols-outlined text-[14px]">arrow_forward</span>Mattresses &amp; Bedding</a></li><li><a class="hover:text-primary transition-colors flex items-center gap-1.5" href="chemicals.html"><span class="material-symbols-outlined text-[14px]">arrow_forward</span>Foam Chemicals</a></li><li><a class="hover:text-primary transition-colors flex items-center gap-1.5" href="index.html#delivery"><span class="material-symbols-outlined text-[14px]">arrow_forward</span>Delivery</a></li><li><a class="hover:text-primary transition-colors flex items-center gap-1.5" href="requestorder.html"><span class="material-symbols-outlined text-[14px]">arrow_forward</span>Request an Order</a></li></ul></div>
+<div class="flex flex-col gap-space-sm"><span class="font-label-lg text-label-lg text-primary uppercase tracking-wider">Visit Us</span>
+<div class="flex flex-col gap-2 font-body-sm text-body-sm text-on-surface-variant">
+<div class="flex items-start gap-2"><span class="material-symbols-outlined text-primary text-[18px] shrink-0">location_on</span><span>Ruai, Nairobi, Kenya<br/>P.O Box 1300 - 00200</span></div>
+<div class="flex items-start gap-2"><span class="material-symbols-outlined text-primary text-[18px] shrink-0">schedule</span><span>Mon – Sat: 8:00 AM – 6:00 PM<br/>Sunday: Closed</span></div></div></div>
+<div class="flex flex-col gap-space-sm"><span class="font-label-lg text-label-lg text-primary uppercase tracking-wider">Contact</span>
+<div class="flex flex-col gap-2 font-body-sm text-body-sm">
+<a class="flex items-center gap-2 text-primary font-bold hover:underline" href="tel:+254104944012"><span class="material-symbols-outlined text-[18px]">call</span>+254 104 944 012</a>
+<a class="flex items-center gap-2 text-on-surface-variant hover:text-primary transition-colors" href="mailto:info@muniwaenterprisesltd.com"><span class="material-symbols-outlined text-[18px]">mail</span>info@muniwaenterprisesltd.com</a>
+<a class="flex items-center gap-2 text-on-surface-variant hover:text-primary transition-colors" href="https://wa.me/254104944012" target="_blank" rel="noopener"><span class="material-symbols-outlined text-[18px]">chat</span>WhatsApp us</a></div></div></div>
+<div class="border-t border-border-earth pt-space-lg flex flex-col md:flex-row items-center justify-between gap-4 font-body-sm text-body-sm text-on-surface-variant">
+<div>&copy; 2026 Muniwa Enterprises Limited. All rights reserved.</div>
+<div class="flex items-center gap-space-md font-label-md text-label-md"><a class="hover:text-primary transition-colors" href="privacy.html">Privacy Policy</a><span class="text-border-earth">|</span><a class="hover:text-primary transition-colors" href="terms.html">Terms &amp; Conditions</a></div></div></div></footer><script>(function(){var b=document.getElementById("menuBtn"),m=document.getElementById("mobileMenu");if(b&&m){b.addEventListener("click",function(){m.classList.toggle("hidden");});}})();</script><script src="whatsapp-form.js"></script><script>(function(){var b=document.querySelectorAll(".gal-btn"),t=document.querySelectorAll(".gal-item");b.forEach(function(x){x.addEventListener("click",function(){var f=x.dataset.f;b.forEach(function(y){var on=y===x;y.classList.toggle("bg-primary",on);y.classList.toggle("text-on-primary",on);y.classList.toggle("bg-surface",!on);y.classList.toggle("text-primary",!on);});t.forEach(function(i){i.style.display=(f==="all"||i.dataset.cat===f)?"":"none";});});});})();</script></body></html>

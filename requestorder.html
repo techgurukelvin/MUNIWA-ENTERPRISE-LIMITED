@@ -1,261 +1,53 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="utf-8">
-    <title>Request Order - Muniwa Enterprises LTD</title>
-    <meta content="width=device-width, initial-scale=1.0" name="viewport">
-    <meta content="Request a product order from Muniwa Enterprises LTD" name="description">
-    <link href="https://muniwaenterprisesltd.com/img/fav-logo.png" rel="icon">
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
-    <style>
-        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-        :root { --forest: #1B4332; --forest-mid: #2D6A4F; --forest-light: #52B788; --gold: #D4A017; --gold-light: #F4C842; --cream: #FAF7F0; --warm-white: #FFFEF9; --charcoal: #1A1A18; --mid-gray: #6B7280; --light-gray: #E8E4DA; --radius: 4px; --radius-lg: 12px; --nav-height: 72px; }
-        html { scroll-behavior: smooth; }
-        body { font-family: 'DM Sans', sans-serif; background: var(--warm-white); color: var(--charcoal); font-size: 16px; line-height: 1.7; overflow-x: hidden; }
-        h1, h2, h3, h4 { font-family: 'Playfair Display', serif; line-height: 1.25; }
-        a { text-decoration: none; color: inherit; }
-        img { max-width: 100%; display: block; }
-        ul { list-style: none; }
-        #nav { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; background: var(--forest); box-shadow: 0 2px 30px rgba(0,0,0,0.15); }
-        .nav-inner { max-width: 1200px; margin: 0 auto; padding: 0 2rem; display: flex; align-items: center; justify-content: space-between; height: var(--nav-height); }
-        .nav-brand { display: flex; align-items: center; gap: 12px; }
-        .nav-brand img { width: 44px; height: 44px; object-fit: contain; filter: brightness(0) invert(1); }
-        .nav-brand span { font-family: 'Playfair Display', serif; font-size: 18px; font-weight: 700; color: white; }
-        .nav-links { display: flex; align-items: center; gap: 2rem; }
-        .nav-links a { color: rgba(255,255,255,0.85); font-size: 14px; font-weight: 500; letter-spacing: 0.5px; text-transform: uppercase; transition: color 0.2s; position: relative; padding-bottom: 4px; }
-        .nav-links a::after { content: ''; position: absolute; bottom: 0; left: 0; width: 0; height: 1.5px; background: var(--gold-light); transition: width 0.3s ease; }
-        .nav-links a:hover { color: white; }
-        .nav-links a:hover::after, .nav-links a.active::after { width: 100%; }
-        .nav-links a.active { color: white; }
-        .nav-cta { background: var(--gold) !important; color: var(--charcoal) !important; padding: 8px 20px; border-radius: var(--radius); font-weight: 600 !important; }
-        .nav-cta:hover { background: var(--gold-light) !important; }
-        .nav-cta::after { display: none !important; }
-        .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 8px; background: none; border: none; }
-        .hamburger span { display: block; width: 24px; height: 2px; background: white; border-radius: 2px; }
-        .page-hero { background: var(--forest); padding: calc(var(--nav-height) + 50px) 0 60px; position: relative; overflow: hidden; }
-        .page-hero::before { content: ''; position: absolute; inset: 0; background-image: radial-gradient(circle at 80% 50%, rgba(82,183,136,0.1) 0%, transparent 60%); }
-        .page-hero-inner { max-width: 1200px; margin: 0 auto; padding: 0 2rem; position: relative; z-index: 1; }
-        .page-hero h1 { font-size: clamp(2rem, 4vw, 3rem); color: white; margin-bottom: 0.75rem; }
-        .page-hero h1 em { font-style: italic; color: var(--gold-light); }
-        .page-hero p { color: rgba(255,255,255,0.7); font-size: 17px; max-width: 520px; }
-        .breadcrumb { display: flex; align-items: center; gap: 8px; margin-bottom: 1.5rem; }
-        .breadcrumb a { color: rgba(255,255,255,0.5); font-size: 13px; }
-        .breadcrumb a:hover { color: var(--gold-light); }
-        .breadcrumb span { color: rgba(255,255,255,0.3); font-size: 13px; }
-        .container { max-width: 1200px; margin: 0 auto; padding: 0 2rem; }
-        .order-section { padding: 80px 0 100px; background: var(--cream); }
-        .order-grid { display: grid; grid-template-columns: 2fr 1fr; gap: 3rem; align-items: start; }
-        .order-form-wrap { background: white; padding: 2.5rem; border-radius: var(--radius-lg); border: 1px solid var(--light-gray); }
-        .order-form-wrap h3 { font-size: 1.5rem; margin-bottom: 0.5rem; color: var(--charcoal); }
-        .order-form-wrap > p { font-size: 14px; color: var(--mid-gray); margin-bottom: 2rem; }
-        .form-section-title { font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: var(--forest); margin: 1.5rem 0 1rem; padding-bottom: 0.5rem; border-bottom: 1px solid var(--light-gray); }
-        .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
-        .form-group { margin-bottom: 1rem; }
-        .form-group label { display: block; font-size: 13px; font-weight: 600; color: var(--charcoal); margin-bottom: 6px; }
-        .form-group input, .form-group textarea, .form-group select { width: 100%; padding: 12px 16px; border: 1.5px solid var(--light-gray); border-radius: var(--radius); font-family: 'DM Sans', sans-serif; font-size: 15px; color: var(--charcoal); background: var(--warm-white); transition: border-color 0.2s, box-shadow 0.2s; outline: none; appearance: none; -webkit-appearance: none; }
-        .form-group input:focus, .form-group textarea:focus, .form-group select:focus { border-color: var(--forest-light); box-shadow: 0 0 0 3px rgba(82,183,136,0.1); }
-        .form-group textarea { resize: vertical; min-height: 120px; }
-        .form-group select { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%236B7280' stroke-width='1.5' fill='none'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 14px center; }
-        .btn-submit { width: 100%; background: var(--forest); color: white; border: none; padding: 16px; border-radius: var(--radius); font-family: 'DM Sans', sans-serif; font-size: 16px; font-weight: 600; cursor: pointer; transition: background 0.25s, transform 0.2s; margin-top: 1rem; }
-        .btn-submit:hover { background: var(--forest-mid); transform: translateY(-1px); }
-        .btn-submit:disabled { opacity: 0.7; cursor: not-allowed; transform: none; }
-        .form-success { display: none; background: rgba(27,67,50,0.08); border: 1px solid var(--forest-light); color: var(--forest); padding: 1.25rem 1.5rem; border-radius: var(--radius); margin-top: 1rem; font-size: 15px; font-weight: 500; }
-        .order-sidebar { display: flex; flex-direction: column; gap: 1.5rem; }
-        .sidebar-card { background: white; border-radius: var(--radius-lg); padding: 1.5rem; border: 1px solid var(--light-gray); }
-        .sidebar-card h4 { font-size: 16px; margin-bottom: 1rem; color: var(--charcoal); }
-        .sidebar-card p { font-size: 14px; color: var(--mid-gray); margin-bottom: 0.75rem; }
-        .sidebar-card ul li { font-size: 14px; color: var(--mid-gray); padding: 0.4rem 0; display: flex; align-items: center; gap: 8px; }
-        .sidebar-card ul li::before { content: '✓'; color: var(--forest-light); font-weight: 700; }
-        .contact-quick a { display: flex; align-items: center; gap: 10px; padding: 10px 14px; border-radius: var(--radius); background: var(--cream); color: var(--charcoal); font-size: 14px; font-weight: 500; margin-bottom: 0.75rem; transition: background 0.2s; }
-        .contact-quick a:hover { background: var(--light-gray); }
-        .contact-quick a:last-child { margin-bottom: 0; }
-        .whatsapp-link { background: rgba(37,211,102,0.1) !important; color: #1a8a3a !important; }
-        .whatsapp-link:hover { background: rgba(37,211,102,0.18) !important; }
-        footer { background: var(--charcoal); color: rgba(255,255,255,0.7); padding: 64px 0 0; }
-        .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 2fr; gap: 3rem; padding-bottom: 3rem; }
-        .footer-brand img { width: 48px; height: 48px; object-fit: contain; filter: brightness(0) invert(1); margin-bottom: 1rem; }
-        .footer-brand p { font-size: 14px; line-height: 1.7; max-width: 280px; }
-        .footer-col h5 { font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 600; text-transform: uppercase; letter-spacing: 1.5px; color: white; margin-bottom: 1.25rem; }
-        .footer-col ul li { margin-bottom: 0.6rem; }
-        .footer-col ul li a { font-size: 14px; color: rgba(255,255,255,0.55); transition: color 0.2s; }
-        .footer-col ul li a:hover { color: var(--gold-light); }
-        .footer-bottom { border-top: 1px solid rgba(255,255,255,0.08); padding: 1.5rem 0; display: flex; justify-content: space-between; align-items: center; }
-        .footer-bottom p { font-size: 13px; color: rgba(255,255,255,0.4); }
-        .whatsapp-btn { position: fixed; bottom: 5rem; right: 1.5rem; width: 52px; height: 52px; background: #25D366; border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 20px rgba(37,211,102,0.4); z-index: 900; transition: transform 0.2s; }
-        .whatsapp-btn:hover { transform: scale(1.1); }
-        .back-top { position: fixed; bottom: 1.5rem; right: 1.5rem; width: 44px; height: 44px; background: var(--forest); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; opacity: 0; pointer-events: none; transition: opacity 0.3s; z-index: 900; }
-        .back-top.visible { opacity: 1; pointer-events: auto; }
-        @media (max-width: 1024px) { .order-grid { grid-template-columns: 1fr; } .footer-grid { grid-template-columns: 1fr 1fr; } }
-        @media (max-width: 768px) {
-            .nav-links { display: none; flex-direction: column; gap: 0; position: absolute; top: var(--nav-height); left: 0; right: 0; background: var(--forest); padding: 1rem 2rem 1.5rem; box-shadow: 0 8px 24px rgba(0,0,0,0.2); }
-            .nav-links.open { display: flex; }
-            .nav-links a { padding: 14px 0; border-bottom: 1px solid rgba(255,255,255,0.08); width: 100%; }
-            .hamburger { display: flex; }
-            .form-row { grid-template-columns: 1fr; }
-            .footer-grid { grid-template-columns: 1fr; }
-            .footer-bottom { flex-direction: column; gap: 0.5rem; text-align: center; }
-        }
-    </style>
-</head>
-<body>
-<nav id="nav">
-    <div class="nav-inner">
-        <a href="index.html" class="nav-brand">
-            <img src="https://muniwaenterprisesltd.com/img/fav-logo.png" alt="Muniwa Enterprises LTD">
-            <span>Muniwa Enterprises</span>
-        </a>
-        <div class="nav-links" id="navLinks">
-            <a href="index.html">Home</a>
-            <a href="about.html">About</a>
-            <a href="product.html">Products</a>
-            <a href="gallery.html">Gallery</a>
-            <a href="contact.html">Contact</a>
-            <a href="requestorder.html" class="nav-cta active">Request Order</a>
-        </div>
-        <button class="hamburger" id="hamburger" onclick="toggleNav()"><span></span><span></span><span></span></button>
-    </div>
-</nav>
 
-<div class="page-hero">
-    <div class="page-hero-inner">
-        <div class="breadcrumb"><a href="index.html">Home</a><span>›</span><span style="color:rgba(255,255,255,0.7);">Request Order</span></div>
-        <h1>Request an <em>Order</em></h1>
-        <p>Fill in the form below and our team will get back to you with pricing and availability within 24 hours.</p>
-    </div>
-</div>
-
-<section class="order-section">
-    <div class="container">
-        <div class="order-grid">
-            <div class="order-form-wrap">
-                <h3>Order Request Form</h3>
-                <p>Tell us what you need and we'll prepare a quote for you.</p>
-                <!-- Go to formspree.io, sign up free, create a form, replace YOUR_FORM_ID below -->
-                <form id="orderForm" action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
-                    <div class="form-section-title">Your Details</div>
-                    <div class="form-row">
-                        <div class="form-group"><label for="fname">First Name</label><input type="text" name="first_name" id="fname" placeholder="Jane" required></div>
-                        <div class="form-group"><label for="lname">Last Name</label><input type="text" name="last_name" id="lname" placeholder="Doe" required></div>
-                    </div>
-                    <div class="form-row">
-                        <div class="form-group"><label for="email">Email Address</label><input type="email" name="email" id="email" placeholder="you@example.com" required></div>
-                        <div class="form-group"><label for="phone">Phone Number</label><input type="tel" name="phone" id="phone" placeholder="+254 700 000 000" required></div>
-                    </div>
-                    <div class="form-row">
-                        <div class="form-group"><label for="company">Company / Business (optional)</label><input type="text" name="company" id="company" placeholder="Your business name"></div>
-                        <div class="form-group"><label for="location">Your Location</label><input type="text" name="location" id="location" placeholder="e.g. Nairobi, Mombasa..." required></div>
-                    </div>
-                    <div class="form-section-title">Order Details</div>
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="product">Product Category</label>
-                            <select name="product_category" id="product" required>
-                                <option value="">Select a product...</option>
-                                <option>Mattresses</option>
-                                <option>Pillows & Covers</option>
-                                <option>Bedsheets</option>
-                                <option>Blankets</option>
-                                <option>Cushions & Covers</option>
-                                <option>Non-Woven Bags</option>
-                                <option>Plastic Chairs & More</option>
-                                <option>Raw Material Chemicals</option>
-                                <option>Multiple Products</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="order_type">Order Type</label>
-                            <select name="order_type" id="order_type" required>
-                                <option value="">Select type...</option>
-                                <option>Retail (Single Items)</option>
-                                <option>Wholesale / Bulk</option>
-                                <option>Custom Order</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="form-row">
-                        <div class="form-group"><label for="quantity">Quantity / Units</label><input type="text" name="quantity" id="quantity" placeholder="e.g. 10 pieces, 5 dozen..." required></div>
-                        <div class="form-group"><label for="size">Size / Specifications (if applicable)</label><input type="text" name="size" id="size" placeholder="e.g. 5x6, 48x6, 4 colors..."></div>
-                    </div>
-                    <div class="form-group">
-                        <label for="delivery">Delivery Preference</label>
-                        <select name="delivery" id="delivery">
-                            <option value="">Select...</option>
-                            <option>Pickup from Ruai</option>
-                            <option>Delivery within Nairobi</option>
-                            <option>Delivery upcountry</option>
-                            <option>To be discussed</option>
-                        </select>
-                    </div>
-                    <div class="form-group"><label for="details">Additional Details / Special Requirements</label><textarea name="details" id="details" placeholder="Any specific requirements, colours, sizes, custom printing, urgency, budget range, etc."></textarea></div>
-                    <button type="submit" class="btn-submit" id="submitBtn">Submit Order Request</button>
-                    <div class="form-success" id="formSuccess">✓ Order request received! Our team will contact you within 24 hours with pricing and availability.</div>
-                </form>
-            </div>
-
-            <div class="order-sidebar">
-                <div class="sidebar-card">
-                    <h4>Why Order From Us?</h4>
-                    <ul>
-                        <li>Competitive retail & wholesale pricing</li>
-                        <li>Wide range of sizes and options</li>
-                        <li>Quality guaranteed on all products</li>
-                        <li>Fast turnaround times</li>
-                        <li>Custom printing available (bags)</li>
-                        <li>Delivery within Nairobi & upcountry</li>
-                        <li>Trusted by 210+ clients</li>
-                    </ul>
-                </div>
-                <div class="sidebar-card">
-                    <h4>Prefer to Contact Us Directly?</h4>
-                    <p>Reach us through any of these channels:</p>
-                    <div class="contact-quick">
-                        <a href="tel:+254104944012"><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>+254 104 944 012</a>
-                        <a href="https://wa.me/254104944012?text=Hello%2C%20I%20would%20like%20to%20request%20an%20order." target="_blank" class="whatsapp-link"><svg width="18" height="18" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z"/></svg>WhatsApp Us</a>
-                        <a href="mailto:info@muniwaenterprisesltd.com"><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>info@muniwaenterprisesltd.com</a>
-                    </div>
-                </div>
-                <div class="sidebar-card" style="background:var(--forest);border-color:var(--forest);">
-                    <h4 style="color:white;">Our Location</h4>
-                    <p style="color:rgba(255,255,255,0.7);">Ruai, Nairobi, Kenya<br>P.O Box 1300 - 00200<br><br>Open Mon–Sat<br>8:00 AM – 6:00 PM</p>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-
-<footer>
-    <div class="container">
-        <div class="footer-grid">
-            <div class="footer-brand"><img src="https://muniwaenterprisesltd.com/img/fav-logo.png" alt="Muniwa Enterprises"><h4 style="font-family:'Playfair Display',serif;color:white;font-size:18px;margin-bottom:0.75rem;">Muniwa Enterprises</h4><p>Premium mattresses and home products, proudly manufactured in Ruai, Nairobi since 2021.</p></div>
-            <div class="footer-col"><h5>Company</h5><ul><li><a href="index.html">Home</a></li><li><a href="about.html">About Us</a></li><li><a href="product.html">Products</a></li><li><a href="gallery.html">Gallery</a></li><li><a href="contact.html">Contact</a></li></ul></div>
-            <div class="footer-col"><h5>Legal</h5><ul><li><a href="#">Privacy Policy</a></li><li><a href="#">Terms & Conditions</a></li><li><a href="requestorder.html">Request Order</a></li></ul></div>
-            <div class="footer-col"><h5>Contact</h5><ul><li><a href="tel:+254104944012">+254 104 944 012</a></li><li><a href="mailto:info@muniwaenterprisesltd.com">info@muniwaenterprisesltd.com</a></li><li><a href="https://wa.me/254104944012" target="_blank">WhatsApp Us</a></li></ul></div>
-        </div>
-        <div class="footer-bottom"><p>&copy; 2025 Muniwa Enterprises Limited. All rights reserved.</p><p>Ruai, Nairobi, Kenya</p></div>
-    </div>
-</footer>
-
-<a href="https://wa.me/254104944012?text=Hello%20Muniwa%20Enterprises!" class="whatsapp-btn" target="_blank" rel="noopener" aria-label="WhatsApp"><svg width="28" height="28" fill="white" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z"/></svg></a>
-<a href="#" class="back-top" id="backTop"><svg width="18" height="18" fill="none" stroke="white" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="18 15 12 9 6 15"/></svg></a>
-
-<script>
-    function toggleNav() { document.getElementById('navLinks').classList.toggle('open'); }
-    document.querySelectorAll('#navLinks a').forEach(l => l.addEventListener('click', () => document.getElementById('navLinks').classList.remove('open')));
-    document.addEventListener('click', e => { const n = document.getElementById('navLinks'), b = document.getElementById('hamburger'); if (n.classList.contains('open') && !n.contains(e.target) && !b.contains(e.target)) n.classList.remove('open'); });
-    window.addEventListener('scroll', () => document.getElementById('backTop').classList.toggle('visible', window.scrollY > 300));
-    const form = document.getElementById('orderForm');
-    if (form) {
-        form.addEventListener('submit', async e => {
-            e.preventDefault();
-            const btn = document.getElementById('submitBtn'), msg = document.getElementById('formSuccess');
-            btn.disabled = true; btn.textContent = 'Submitting...';
-            try {
-                const res = await fetch(form.action, { method: 'POST', body: new FormData(form), headers: { 'Accept': 'application/json' } });
-                if (res.ok) { msg.style.display = 'block'; form.reset(); btn.textContent = 'Request Submitted!'; setTimeout(() => { btn.disabled = false; btn.textContent = 'Submit Order Request'; msg.style.display = 'none'; }, 6000); }
-                else { btn.disabled = false; btn.textContent = 'Submit Order Request'; alert('Something went wrong. Please call or WhatsApp us directly.'); }
-            } catch { btn.disabled = false; btn.textContent = 'Submit Order Request'; alert('Network error. Please try again.'); }
-        });
-    }
-</script>
-</body>
-</html>
+<html lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><meta content="web_standard" name="shell-type"/><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&amp;family=Playfair+Display:ital,wght@0,400..900;1,400..900&amp;display=swap" rel="stylesheet"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config={darkMode:"class",theme:{extend:{"colors":{"primary-fixed-dim":"#a5d0b9","on-tertiary-container":"#72a9f0","surface-container-high":"#ebe8e1","surface":"#fcf9f2","outline":"#717973","primary-fixed":"#c1ecd4","on-primary":"#ffffff","text-charcoal-secondary":"#22252A","error":"#ba1a1a","on-primary-fixed":"#002114","border-earth":"#E2DACB","tertiary-fixed-dim":"#a3c9ff","on-surface-variant":"#414844","delivery-amber":"#C67D0A","on-secondary-fixed-variant":"#5c4300","tertiary-container":"#003d70","surface-bright":"#fcf9f2","on-tertiary-fixed":"#001c39","error-container":"#ffdad6","surface-tint":"#3f6653","inverse-primary":"#a5d0b9","on-secondary-fixed":"#261a00","on-secondary-container":"#715300","secondary-fixed":"#ffdfa0","text-charcoal-primary":"#1F2421","on-primary-fixed-variant":"#274e3d","secondary":"#795900","surface-container-lowest":"#ffffff","surface-variant":"#e5e2db","on-tertiary":"#ffffff","on-error-container":"#93000a","inverse-surface":"#31312c","on-background":"#1c1c18","surface-container-highest":"#e5e2db","surface-cream-subtle":"#F3EFE6","surface-dim":"#dcdad3","on-error":"#ffffff","surface-container":"#f0eee7","primary-container":"#1b4332","secondary-container":"#ffc641","on-surface":"#1c1c18","tertiary-fixed":"#d3e3ff","tertiary":"#00274b","industrial-danger-sds":"#B9382B","on-secondary":"#ffffff","on-tertiary-fixed-variant":"#004882","surface-container-low":"#f6f3ec","secondary-fixed-dim":"#f6be39","outline-variant":"#c1c8c2","on-primary-container":"#86af99","background":"#fcf9f2","primary":"#012d1d","inverse-on-surface":"#f3f0ea"},"borderRadius":{"DEFAULT":"0.25rem","lg":"0.5rem","xl":"0.75rem","full":"9999px"},"spacing":{"gutter-mobile":"1rem","space-md":"1rem","gutter":"1.5rem","margin-mobile":"1.25rem","space-lg":"1.5rem","space-sm":"0.5rem","space-xl":"2.5rem","margin":"3rem","space-xs":"0.25rem"},"fontFamily":{"headline-sm":["Playfair Display"],"body-md":["DM Sans"],"headline-md":["Playfair Display"],"label-lg":["DM Sans"],"body-lg":["DM Sans"],"headline-xl":["Playfair Display"],"headline-xl-mobile":["Playfair Display"],"label-spec":["DM Sans"],"headline-lg-mobile":["Playfair Display"],"body-sm":["DM Sans"],"headline-lg":["Playfair Display"],"label-md":["DM Sans"]},"fontSize":{"headline-sm":["20px",{"lineHeight":"28px","fontWeight":"600"}],"body-md":["16px",{"lineHeight":"24px","fontWeight":"400"}],"headline-md":["26px",{"lineHeight":"34px","fontWeight":"600"}],"label-lg":["14px",{"lineHeight":"20px","fontWeight":"700"}],"body-lg":["18px",{"lineHeight":"28px","fontWeight":"400"}],"headline-xl":["48px",{"lineHeight":"56px","fontWeight":"700"}],"headline-xl-mobile":["34px",{"lineHeight":"42px","fontWeight":"700"}],"label-spec":["11px",{"lineHeight":"14px","fontWeight":"700"}],"headline-lg-mobile":["28px",{"lineHeight":"36px","fontWeight":"600"}],"body-sm":["14px",{"lineHeight":"20px","fontWeight":"400"}],"headline-lg":["36px",{"lineHeight":"44px","fontWeight":"600"}],"label-md":["12px",{"lineHeight":"16px","fontWeight":"600"}]}}}};</script><title>Request an Order | Muniwa Enterprises LTD</title><meta name="description" content="Request a mattress, bulk order or chemical quote from Muniwa Enterprises LTD, delivered countrywide."/><link href="img/fav-logo.png" rel="icon"/><link rel="canonical" href="https://muniwaenterprisesltd.com/requestorder.html"/><meta property="og:type" content="website"/><meta property="og:site_name" content="Muniwa Enterprises LTD"/><meta property="og:title" content="Request an Order | Muniwa Enterprises LTD"/><meta property="og:description" content="Request a mattress, bulk order or chemical quote from Muniwa Enterprises LTD, delivered countrywide."/><meta property="og:url" content="https://muniwaenterprisesltd.com/requestorder.html"/><meta property="og:image" content="https://muniwaenterprisesltd.com/img/slider-1.png"/><meta name="twitter:card" content="summary_large_image"/><script async src="https://www.googletagmanager.com/gtag/js?id=G-96ZZFMQJ5L"></script><script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-96ZZFMQJ5L');</script></head><body class="bg-background font-body-md text-on-surface antialiased min-h-screen"><header class="fixed top-0 left-0 w-full z-50 shadow-[0_1px_8px_rgba(0,0,0,0.06)]">
+<div class="w-full bg-primary text-primary-fixed py-1.5 px-gutter"><div class="w-full flex items-center justify-between font-label-md text-label-md">
+<div class="flex items-center gap-space-sm"><span class="material-symbols-outlined text-[15px] text-secondary-fixed">precision_manufacturing</span><span>Factory in Ruai, Nairobi • Delivering countrywide</span></div>
+<a class="hidden sm:flex items-center gap-1.5 text-primary-fixed hover:text-on-primary transition-colors" href="tel:+254104944012"><span class="material-symbols-outlined text-[15px]">call</span><span>+254 104 944 012</span></a></div></div>
+<div class="w-full bg-primary-container px-gutter"><div class="h-20 flex items-center justify-between gap-space-md">
+<a href="index.html" class="flex items-center gap-space-md"><img alt="Muniwa Enterprises Logo" class="h-12 w-12 rounded-full bg-white object-contain shadow-md" src="img/fav-logo.png"/>
+<div class="flex flex-col"><span class="font-headline-sm text-headline-sm text-on-primary leading-tight">MUNIWA</span><span class="font-label-spec text-label-spec text-primary-fixed-dim tracking-wider uppercase">Enterprises Ltd • Ruai</span></div></a>
+<nav class="hidden xl:flex items-center gap-1 bg-primary/40 p-1 rounded-lg"><a class="px-space-md py-2 rounded-lg font-label-lg text-label-lg text-primary-fixed hover:bg-primary hover:text-on-primary transition-all" href="index.html">Home</a><a class="px-space-md py-2 rounded-lg font-label-lg text-label-lg text-primary-fixed hover:bg-primary hover:text-on-primary transition-all" href="product.html">Mattresses &amp; Bedding</a><a class="px-space-md py-2 rounded-lg font-label-lg text-label-lg text-primary-fixed hover:bg-primary hover:text-on-primary transition-all" href="chemicals.html">Foam Chemicals</a><a class="px-space-md py-2 rounded-lg font-label-lg text-label-lg text-primary-fixed hover:bg-primary hover:text-on-primary transition-all" href="index.html#delivery">Delivery</a><a class="px-space-md py-2 rounded-lg font-label-lg text-label-lg text-primary-fixed hover:bg-primary hover:text-on-primary transition-all" href="about.html">About Us</a><a class="px-space-md py-2 rounded-lg font-label-lg text-label-lg text-primary-fixed hover:bg-primary hover:text-on-primary transition-all" href="contact.html">Contact</a></nav>
+<div class="flex items-center gap-space-md">
+<a class="hidden md:flex items-center gap-1.5 px-space-md py-2.5 rounded-lg bg-secondary-container text-on-secondary-fixed font-label-lg text-label-lg hover:bg-secondary-fixed transition-all" href="requestorder.html"><span class="material-symbols-outlined text-[18px]">request_quote</span><span>Get a Quote</span></a>
+<button id="menuBtn" type="button" aria-label="Open menu" class="xl:hidden w-10 h-10 rounded-lg bg-primary text-on-primary flex items-center justify-center"><span class="material-symbols-outlined ">menu</span></button></div></div></div>
+<div id="mobileMenu" class="hidden xl:hidden bg-primary-container border-t border-primary"><a class="block px-gutter py-3 text-primary-fixed hover:bg-primary font-label-lg text-label-lg" href="index.html">Home</a><a class="block px-gutter py-3 text-primary-fixed hover:bg-primary font-label-lg text-label-lg" href="product.html">Mattresses &amp; Bedding</a><a class="block px-gutter py-3 text-primary-fixed hover:bg-primary font-label-lg text-label-lg" href="chemicals.html">Foam Chemicals</a><a class="block px-gutter py-3 text-primary-fixed hover:bg-primary font-label-lg text-label-lg" href="index.html#delivery">Delivery</a><a class="block px-gutter py-3 text-primary-fixed hover:bg-primary font-label-lg text-label-lg" href="about.html">About Us</a><a class="block px-gutter py-3 text-primary-fixed hover:bg-primary font-label-lg text-label-lg" href="contact.html">Contact</a><a class="block px-gutter py-3 bg-secondary-container text-on-secondary-fixed font-label-lg text-label-lg" href="requestorder.html">Get a Quote</a></div>
+</header><main class="w-full pt-[116px] bg-background"><div class="flex flex-col w-full"><section class="w-full bg-surface-cream-subtle px-gutter py-space-xl relative overflow-hidden"><div class="max-w-7xl mx-auto"><span class="font-label-spec text-label-spec uppercase tracking-wider text-secondary">Request an order</span><h1 class="font-headline-xl text-headline-xl text-primary font-bold tracking-tight mt-2 max-w-3xl">Request an Order or Custom Quote</h1><p class="font-body-lg text-body-lg text-on-surface-variant max-w-2xl mt-3">A single mattress delivered to your door, bulk orders for a school or hotel, or foam chemicals: tell us what you need and we will reply with a quote.</p></div></section><section class="w-full bg-surface py-space-xl px-gutter scroll-mt-32"><div class="max-w-7xl mx-auto"><div class="grid grid-cols-1 lg:grid-cols-12 gap-space-xl items-start">
+<div class="lg:col-span-7 bg-surface-container-lowest border border-border-earth rounded-2xl p-6 md:p-8">
+<form id="orderForm" data-wa-form data-wa-title="Order Request" class="flex flex-col gap-5">
+<fieldset data-label="Order type"><legend class="block font-label-md text-label-md text-primary mb-1.5">Step 1: What do you need?</legend><div class="grid grid-cols-1 sm:grid-cols-3 gap-2"><label class="cursor-pointer"><input type="radio" name="stream" value="Mattress & bedding (retail)" class="peer sr-only" checked/><div class="flex flex-col p-3 rounded-lg border border-border-earth bg-surface-cream-subtle peer-checked:bg-primary peer-checked:text-on-primary peer-checked:border-primary transition-all"><span class="font-label-lg text-label-lg font-bold">Mattress &amp; Bedding</span><span class="font-label-spec text-label-spec opacity-80">Retail &amp; family</span></div></label><label class="cursor-pointer"><input type="radio" name="stream" value="Bulk / institutional" class="peer sr-only"/><div class="flex flex-col p-3 rounded-lg border border-border-earth bg-surface-cream-subtle peer-checked:bg-primary peer-checked:text-on-primary peer-checked:border-primary transition-all"><span class="font-label-lg text-label-lg font-bold">Bulk Institutional</span><span class="font-label-spec text-label-spec opacity-80">Schools, hostels, hospitals</span></div></label><label class="cursor-pointer"><input type="radio" name="stream" value="Foam chemicals" class="peer sr-only"/><div class="flex flex-col p-3 rounded-lg border border-border-earth bg-surface-cream-subtle peer-checked:bg-primary peer-checked:text-on-primary peer-checked:border-primary transition-all"><span class="font-label-lg text-label-lg font-bold">Foam Chemicals</span><span class="font-label-spec text-label-spec opacity-80">TDI, polyol and more</span></div></label></div></fieldset>
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-4"><div><label class="block font-label-md text-label-md text-primary mb-1.5" for="fullName">Full name *</label><input class="w-full bg-surface-container-lowest text-text-charcoal-primary font-body-md text-body-md px-3.5 py-2.5 rounded-lg border border-border-earth outline-none focus:border-primary transition-colors" id="fullName" name="name" required placeholder="e.g. Samuel Mutiso"/></div>
+<div><label class="block font-label-md text-label-md text-primary mb-1.5" for="phone">Phone / WhatsApp *</label><input class="w-full bg-surface-container-lowest text-text-charcoal-primary font-body-md text-body-md px-3.5 py-2.5 rounded-lg border border-border-earth outline-none focus:border-primary transition-colors" id="phone" name="phone" type="tel" required placeholder="+254 7XX XXX XXX"/></div></div>
+<div><label class="block font-label-md text-label-md text-primary mb-1.5" for="email">Email (optional)</label><input class="w-full bg-surface-container-lowest text-text-charcoal-primary font-body-md text-body-md px-3.5 py-2.5 rounded-lg border border-border-earth outline-none focus:border-primary transition-colors" id="email" name="email" type="email" placeholder="you@example.com"/></div>
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-4"><div><label class="block font-label-md text-label-md text-primary mb-1.5" for="county">Delivery county *</label><select class="w-full bg-surface-container-lowest text-text-charcoal-primary font-body-md text-body-md px-3.5 py-2.5 rounded-lg border border-border-earth outline-none focus:border-primary transition-colors" id="county" name="county" required><option value="">Select county...</option><option>Baringo</option><option>Bomet</option><option>Bungoma</option><option>Busia</option><option>Elgeyo-Marakwet</option><option>Embu</option><option>Garissa</option><option>Homa Bay</option><option>Isiolo</option><option>Kajiado</option><option>Kakamega</option><option>Kericho</option><option>Kiambu</option><option>Kilifi</option><option>Kirinyaga</option><option>Kisii</option><option>Kisumu</option><option>Kitui</option><option>Kwale</option><option>Laikipia</option><option>Lamu</option><option>Machakos</option><option>Makueni</option><option>Mandera</option><option>Marsabit</option><option>Meru</option><option>Migori</option><option>Mombasa</option><option>Murang'a</option><option>Nairobi</option><option>Nakuru</option><option>Nandi</option><option>Narok</option><option>Nyamira</option><option>Nyandarua</option><option>Nyeri</option><option>Samburu</option><option>Siaya</option><option>Taita-Taveta</option><option>Tana River</option><option>Tharaka-Nithi</option><option>Trans Nzoia</option><option>Turkana</option><option>Uasin Gishu</option><option>Vihiga</option><option>Wajir</option><option>West Pokot</option></select></div>
+<div><label class="block font-label-md text-label-md text-primary mb-1.5" for="town">Nearest town / institution *</label><input class="w-full bg-surface-container-lowest text-text-charcoal-primary font-body-md text-body-md px-3.5 py-2.5 rounded-lg border border-border-earth outline-none focus:border-primary transition-colors" id="town" name="town" required placeholder="e.g. Eldoret town"/></div></div>
+<div><label class="block font-label-md text-label-md text-primary mb-1.5" for="items">Sizes &amp; quantities *</label><input class="w-full bg-surface-container-lowest text-text-charcoal-primary font-body-md text-body-md px-3.5 py-2.5 rounded-lg border border-border-earth outline-none focus:border-primary transition-colors" id="items" name="items" required placeholder="e.g. 10 mattresses 3x6, 5 mattresses 4x6"/></div>
+<div><label class="block font-label-md text-label-md text-primary mb-1.5" for="notes">Special requests (optional)</label><textarea class="w-full bg-surface-container-lowest text-text-charcoal-primary font-body-md text-body-md px-3.5 py-2.5 rounded-lg border border-border-earth outline-none focus:border-primary transition-colors" id="notes" name="notes" rows="3" placeholder="Custom sizes, covers, branding, urgency, budget..."></textarea></div>
+<button type="submit" class="inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-lg font-label-lg text-label-lg shadow-md transition-all hover:scale-[1.02] active:scale-[0.98] bg-primary text-on-primary hover:bg-primary-container w-full"><span class="material-symbols-outlined text-[20px] text-secondary-fixed">chat</span>Send order on WhatsApp</button>
+<div class="form-success hidden bg-primary-fixed text-on-primary-fixed p-3 rounded-lg font-body-sm text-body-sm">WhatsApp opened with your order. Press Send there to finish.</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant">No payment is taken on this website. We confirm price, delivery cost and payment details when we reply.</p></form></div>
+<div class="lg:col-span-5 flex flex-col gap-space-md">
+<div class="rounded-2xl bg-surface-container-low border border-border-earth shadow-sm p-space-md"><span class="font-label-spec text-label-spec uppercase tracking-wider text-on-surface-variant">Live message preview</span><pre data-wa-preview class="mt-2 whitespace-pre-wrap font-body-sm text-body-sm text-on-surface-variant"></pre></div>
+<div class="rounded-2xl bg-surface-container-low border border-border-earth shadow-sm p-space-md"><h3 class="font-headline-sm text-headline-sm text-primary mb-2">Why order from us?</h3><ul class="flex flex-col gap-2 font-body-md text-body-md text-on-surface-variant">
+<li class="flex gap-2"><span class="material-symbols-outlined text-secondary">factory</span>Direct from our Ruai factory</li><li class="flex gap-2"><span class="material-symbols-outlined text-secondary">local_shipping</span>Delivery across Kenya</li><li class="flex gap-2"><span class="material-symbols-outlined text-secondary">sell</span>Retail and wholesale pricing</li><li class="flex gap-2"><span class="material-symbols-outlined text-secondary">groups</span>Trusted by 210+ clients since 2021</li></ul></div>
+<div class="bg-primary text-on-primary rounded-2xl p-space-md"><h3 class="font-headline-sm text-headline-sm mb-2">Need help now?</h3><div class="flex flex-col gap-2 font-body-md text-body-md">
+<a class="flex gap-2 items-center" href="tel:+254104944012"><span class="material-symbols-outlined text-secondary-fixed">call</span>+254 104 944 012</a><a class="flex gap-2 items-center" href="https://wa.me/254104944012" target="_blank" rel="noopener"><span class="material-symbols-outlined text-secondary-fixed">chat</span>WhatsApp us</a><a class="flex gap-2 items-center" href="mailto:info@muniwaenterprisesltd.com"><span class="material-symbols-outlined text-secondary-fixed">mail</span>info@muniwaenterprisesltd.com</a>
+<div class="flex gap-2 items-start pt-2 text-primary-fixed-dim"><span class="material-symbols-outlined text-secondary-fixed">schedule</span>Mon – Sat: 8:00 AM – 6:00 PM</div></div></div></div></div></div></section><section class="w-full bg-surface-cream-subtle py-space-xl px-gutter scroll-mt-32"><div class="max-w-7xl mx-auto"><div class="max-w-3xl mx-auto"><span class="font-label-spec text-label-spec uppercase tracking-wider text-secondary">Questions</span><h2 class="font-headline-lg text-headline-lg text-primary font-bold mb-space-md">Frequently Asked Questions</h2><div class="flex flex-col gap-3"><details class="rounded-2xl bg-surface-container-low border border-border-earth shadow-sm p-space-md group"><summary class="font-label-lg text-label-lg text-primary cursor-pointer">How does payment work?</summary><p class="font-body-md text-body-md text-on-surface-variant mt-2">You do not pay on this website. After you send your request we reply with the price, delivery cost and payment details.</p></details><details class="rounded-2xl bg-surface-container-low border border-border-earth shadow-sm p-space-md group"><summary class="font-label-lg text-label-lg text-primary cursor-pointer">How do you deliver to other counties?</summary><p class="font-body-md text-body-md text-on-surface-variant mt-2">We arrange transport from Ruai to your county or nearest town and quote the cost with your order.</p></details><details class="rounded-2xl bg-surface-container-low border border-border-earth shadow-sm p-space-md group"><summary class="font-label-lg text-label-lg text-primary cursor-pointer">Do you sell TDI and polyol?</summary><p class="font-body-md text-body-md text-on-surface-variant mt-2">Yes. See our Foam Chemicals page for the range and to request a quote. Safety Data Sheets are available on request.</p></details><details class="rounded-2xl bg-surface-container-low border border-border-earth shadow-sm p-space-md group"><summary class="font-label-lg text-label-lg text-primary cursor-pointer">Can I collect from the factory?</summary><p class="font-body-md text-body-md text-on-surface-variant mt-2">Yes. Visit us in Ruai, Nairobi, Mon – Sat, 8:00 AM – 6:00 PM, or call ahead on +254 104 944 012.</p></details></div></div></div></section></div></main><div class="fixed bottom-6 right-6 z-40 flex items-center gap-2"><div class="hidden sm:flex bg-surface text-text-charcoal-primary px-3 py-1.5 rounded-full shadow-[0_8px_24px_-4px_rgba(31,36,33,0.12)] font-label-md text-label-md border border-border-earth items-center gap-2"><span class="w-2 h-2 rounded-full bg-delivery-amber animate-pulse"></span><span>Chat with us</span></div>
+<a aria-label="Chat on WhatsApp" class="w-14 h-14 rounded-full bg-primary-container text-on-primary flex items-center justify-center shadow-[0_8px_24px_-4px_rgba(31,36,33,0.2)] hover:bg-primary transition-transform hover:scale-105" href="https://wa.me/254104944012?text=Hello%20Muniwa%20Enterprises%2C%20I%20would%20like%20to%20make%20an%20inquiry." target="_blank" rel="noopener"><span class="material-symbols-outlined text-[28px]">forum</span></a></div><footer class="w-full bg-surface-cream-subtle text-text-charcoal-primary pt-space-xl pb-space-lg border-t border-border-earth"><div class="w-full px-gutter max-w-7xl mx-auto">
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-space-xl pb-space-xl">
+<div class="flex flex-col gap-space-sm"><div class="flex items-center gap-space-sm"><img alt="Muniwa Enterprises Logo" class="h-12 w-12 rounded-full object-contain" src="img/fav-logo.png"/><span class="font-headline-md text-headline-md text-primary">MUNIWA</span><span class="font-label-spec text-label-spec text-secondary-fixed-dim bg-primary px-2 py-0.5 rounded">EST. 2021</span></div>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Manufacturer of mattresses and home products, proudly based in Ruai, Nairobi. We also supply foam raw-material chemicals to other manufacturers.</p></div>
+<div class="flex flex-col gap-space-sm"><span class="font-label-lg text-label-lg text-primary uppercase tracking-wider">Products</span><ul class="flex flex-col gap-2 font-body-sm text-body-sm text-on-surface-variant"><li><a class="hover:text-primary transition-colors flex items-center gap-1.5" href="product.html"><span class="material-symbols-outlined text-[14px]">arrow_forward</span>Mattresses &amp; Bedding</a></li><li><a class="hover:text-primary transition-colors flex items-center gap-1.5" href="chemicals.html"><span class="material-symbols-outlined text-[14px]">arrow_forward</span>Foam Chemicals</a></li><li><a class="hover:text-primary transition-colors flex items-center gap-1.5" href="index.html#delivery"><span class="material-symbols-outlined text-[14px]">arrow_forward</span>Delivery</a></li><li><a class="hover:text-primary transition-colors flex items-center gap-1.5" href="requestorder.html"><span class="material-symbols-outlined text-[14px]">arrow_forward</span>Request an Order</a></li></ul></div>
+<div class="flex flex-col gap-space-sm"><span class="font-label-lg text-label-lg text-primary uppercase tracking-wider">Visit Us</span>
+<div class="flex flex-col gap-2 font-body-sm text-body-sm text-on-surface-variant">
+<div class="flex items-start gap-2"><span class="material-symbols-outlined text-primary text-[18px] shrink-0">location_on</span><span>Ruai, Nairobi, Kenya<br/>P.O Box 1300 - 00200</span></div>
+<div class="flex items-start gap-2"><span class="material-symbols-outlined text-primary text-[18px] shrink-0">schedule</span><span>Mon – Sat: 8:00 AM – 6:00 PM<br/>Sunday: Closed</span></div></div></div>
+<div class="flex flex-col gap-space-sm"><span class="font-label-lg text-label-lg text-primary uppercase tracking-wider">Contact</span>
+<div class="flex flex-col gap-2 font-body-sm text-body-sm">
+<a class="flex items-center gap-2 text-primary font-bold hover:underline" href="tel:+254104944012"><span class="material-symbols-outlined text-[18px]">call</span>+254 104 944 012</a>
+<a class="flex items-center gap-2 text-on-surface-variant hover:text-primary transition-colors" href="mailto:info@muniwaenterprisesltd.com"><span class="material-symbols-outlined text-[18px]">mail</span>info@muniwaenterprisesltd.com</a>
+<a class="flex items-center gap-2 text-on-surface-variant hover:text-primary transition-colors" href="https://wa.me/254104944012" target="_blank" rel="noopener"><span class="material-symbols-outlined text-[18px]">chat</span>WhatsApp us</a></div></div></div>
+<div class="border-t border-border-earth pt-space-lg flex flex-col md:flex-row items-center justify-between gap-4 font-body-sm text-body-sm text-on-surface-variant">
+<div>&copy; 2026 Muniwa Enterprises Limited. All rights reserved.</div>
+<div class="flex items-center gap-space-md font-label-md text-label-md"><a class="hover:text-primary transition-colors" href="privacy.html">Privacy Policy</a><span class="text-border-earth">|</span><a class="hover:text-primary transition-colors" href="terms.html">Terms &amp; Conditions</a></div></div></div></footer><script>(function(){var b=document.getElementById("menuBtn"),m=document.getElementById("mobileMenu");if(b&&m){b.addEventListener("click",function(){m.classList.toggle("hidden");});}})();</script><script src="whatsapp-form.js"></script></body></html>
